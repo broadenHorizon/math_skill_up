@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:math_skill_up/core/theme/app_theme_data.dart';
+import 'package:math_skill_up/core/theme/app_theme_mode.dart';
 
 import 'services/router.dart';
 
@@ -17,12 +19,15 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-
-    return MaterialApp.router(
-      routerConfig: router,
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
-    );
+    return ValueListenableBuilder<ThemeMode>(
+        valueListenable: AppThemeMode.themeMode,
+        builder: (context, mode, child) {
+          return MaterialApp.router(
+            routerConfig: router,
+            darkTheme: AppThemeData.dark,
+            theme: AppThemeData.light,
+            themeMode: mode,
+          );
+        });
   }
 }
