@@ -11,3 +11,5 @@ enum QuestionType {
   @HiveField(2)
   alphabet,
 }
+
+const String historyBoxKey = 'history';
