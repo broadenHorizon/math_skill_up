@@ -3,8 +3,8 @@ import 'package:math_skill_up/core/constants/constants.dart';
 
 part 'history_model.g.dart';
 
-@HiveType(typeId: 2)
-class HistoryModel {
+@HiveType(typeId: 1)
+class History {
   @HiveField(0)
   final DateTime date;
   @HiveField(1) // 날짜 (년월일)
@@ -14,7 +14,7 @@ class HistoryModel {
   @HiveField(3)
   final double accuracy; // 정답률 (0.00 ~ 1.00)
 
-  HistoryModel({
+  History({
     required this.date,
     required this.questionType,
     required this.elapsedTime,
