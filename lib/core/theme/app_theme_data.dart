@@ -3,48 +3,53 @@ import 'package:math_skill_up/core/theme/app_colors.dart';
 
 class AppThemeData {
   static final ThemeData light = ThemeData(
-      // Background Color
-      scaffoldBackgroundColor: AppColors.lightBackgroundColor,
-      appBarTheme:
-          const AppBarTheme(backgroundColor: AppColors.lightBackgroundColor),
+    // Color Scheme
+    colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        surface: AppColors.gray100,
+        primaryContainer: AppColors.offWhite,
+        secondaryContainer: AppColors.gray100,
+        shadow: AppColors.gray300,
+        outline: AppColors.gray200,
+        error: AppColors.error),
 
-      // Text Color
-      textTheme: textTheme.copyWith(),
-      textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: AppColors.black,
-      ),
-
-      // Icon Color
-      iconTheme: const IconThemeData(color: AppColors.black));
+    // Text Color
+    textTheme: textTheme.copyWith(),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.black,
+    ),
+  );
 
   static final ThemeData dark = ThemeData(
-      // Background Color
-      scaffoldBackgroundColor: AppColors.darkBackgroundColor,
-      appBarTheme:
-          const AppBarTheme(backgroundColor: AppColors.darkBackgroundColor),
+    // Color Scheme
+    colorScheme: const ColorScheme.dark(
+        primary: AppColors.primaryDark,
+        surface: AppColors.black,
+        primaryContainer: AppColors.gray400,
+        secondaryContainer: AppColors.gray200,
+        shadow: AppColors.gray200,
+        outline: AppColors.gray100,
+        error: AppColors.errorDark),
 
-      // Text Color
-      textTheme: textTheme.copyWith(
-        displayLarge: textTheme.displayLarge?.copyWith(color: AppColors.white),
-        displayMedium:
-            textTheme.displayMedium?.copyWith(color: AppColors.white),
-        displaySmall: textTheme.displaySmall?.copyWith(color: AppColors.white),
-        titleLarge: textTheme.titleLarge?.copyWith(color: AppColors.white),
-        titleMedium: textTheme.titleMedium?.copyWith(color: AppColors.white),
-        titleSmall: textTheme.titleSmall?.copyWith(color: AppColors.white),
-        bodyLarge: textTheme.bodyLarge?.copyWith(color: AppColors.white),
-        bodyMedium: textTheme.bodyMedium?.copyWith(color: AppColors.white),
-        bodySmall: textTheme.bodySmall?.copyWith(color: AppColors.white),
-        labelLarge: textTheme.labelLarge?.copyWith(color: AppColors.white),
-        labelMedium: textTheme.labelMedium?.copyWith(color: AppColors.white),
-        labelSmall: textTheme.labelSmall?.copyWith(color: AppColors.white),
-      ),
-      textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: AppColors.offWhite,
-      ),
-
-      // Icon Color
-      iconTheme: const IconThemeData(color: AppColors.offWhite));
+    // Text Color
+    textTheme: textTheme.copyWith(
+      displayLarge: textTheme.displayLarge?.copyWith(color: AppColors.white),
+      displayMedium: textTheme.displayMedium?.copyWith(color: AppColors.white),
+      displaySmall: textTheme.displaySmall?.copyWith(color: AppColors.white),
+      titleLarge: textTheme.titleLarge?.copyWith(color: AppColors.white),
+      titleMedium: textTheme.titleMedium?.copyWith(color: AppColors.white),
+      titleSmall: textTheme.titleSmall?.copyWith(color: AppColors.white),
+      bodyLarge: textTheme.bodyLarge?.copyWith(color: AppColors.white),
+      bodyMedium: textTheme.bodyMedium?.copyWith(color: AppColors.white),
+      bodySmall: textTheme.bodySmall?.copyWith(color: AppColors.white),
+      labelLarge: textTheme.labelLarge?.copyWith(color: AppColors.white),
+      labelMedium: textTheme.labelMedium?.copyWith(color: AppColors.white),
+      labelSmall: textTheme.labelSmall?.copyWith(color: AppColors.white),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.offWhite,
+    ),
+  );
 
   static const TextTheme textTheme = TextTheme(
     /**
