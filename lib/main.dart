@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:math_skill_up/core/components/loading_indicator.dart';
+import 'package:math_skill_up/core/theme/constants.dart';
 import 'package:math_skill_up/core/theme/app_theme_data.dart';
-import 'package:math_skill_up/core/theme/app_theme_mode.dart';
+import 'package:math_skill_up/core/theme/app_theme_notifier.dart';
 
 import 'services/router.dart';
 
@@ -22,15 +24,14 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-    return ValueListenableBuilder<ThemeMode>(
-        valueListenable: AppThemeMode.themeMode,
-        builder: (context, mode, child) {
-          return MaterialApp.router(
-            routerConfig: router,
-            darkTheme: AppThemeData.dark,
-            theme: AppThemeData.light,
-            themeMode: mode,
-          );
-        });
+    AsyncValue<String> theme = ref.watch(appThemeNotifierProvider);
+    if (theme.isLoading) {
+      return const Center(child: LoadingIndicator());
+    }
+    return MaterialApp.router(
+      routerConfig: router,
+      theme:
+          (theme.value == lightMode) ? AppThemeData.light : AppThemeData.dark,
+    );
   }
 }
