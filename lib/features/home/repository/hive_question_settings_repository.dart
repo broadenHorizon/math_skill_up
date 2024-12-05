@@ -59,13 +59,4 @@ class HiveQuestionSettingsRepository extends _$HiveQuestionSettingsRepository
     await _initBox();
     await _box.put(_key, settings); // key 'settings'로 데이터를 저장
   }
-
-  // 동기적으로 설정 값 가져오기
-  @override
-  QuestionSettingsModel? getSettings() {
-    if (!_box.isOpen) {
-      throw Exception("Box is not initialized. Please call _initBox first.");
-    }
-    return _box.get(_key);
-  }
 }
