@@ -119,7 +119,7 @@ class AppThemeData {
      * 버튼 또는 라벨
      */
     labelLarge: TextStyle(
-      fontSize: 14.0,
+      fontSize: 18.0,
       fontWeight: FontWeight.bold,
       color: AppColors.black,
     ),

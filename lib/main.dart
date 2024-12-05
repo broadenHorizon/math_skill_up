@@ -5,6 +5,8 @@ import 'package:math_skill_up/core/components/loading_indicator.dart';
 import 'package:math_skill_up/core/theme/constants.dart';
 import 'package:math_skill_up/core/theme/app_theme_data.dart';
 import 'package:math_skill_up/core/theme/app_theme_notifier.dart';
+import 'package:math_skill_up/features/home/model/question_settings_model.dart';
+import 'package:math_skill_up/features/home/repository/hive_question_settings_repository.dart';
 
 import 'services/router.dart';
 
@@ -25,7 +27,8 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     AsyncValue<String> theme = ref.watch(appThemeNotifierProvider);
-    if (theme.isLoading) {
+    final questionSettings = ref.watch(hiveQuestionSettingsRepositoryProvider);
+    if (theme.isLoading || questionSettings.isLoading) {
       return const Center(child: LoadingIndicator());
     }
     return MaterialApp.router(
