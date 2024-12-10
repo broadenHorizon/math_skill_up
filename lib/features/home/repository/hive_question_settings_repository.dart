@@ -42,7 +42,7 @@ class HiveQuestionSettingsRepository extends _$HiveQuestionSettingsRepository
         problemType: QuestionType.arithmetic, // 사칙연산
         questionCount: QuestionCount.ten, // 10문항
         arithmeticType: ArithmeticType.addition, // 덧셈
-        digitCount: DigitCount.ten, // 10자리
+        digitCount: DigitCount.one, // 1자리
       );
       await _box.put('settings', defaultSettings);
     }
