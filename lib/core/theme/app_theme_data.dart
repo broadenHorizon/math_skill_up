@@ -85,8 +85,8 @@ class AppThemeData {
     ),
     // 카드 제목, 세션 제목 등
     titleMedium: TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w600,
+      fontSize: 20.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
     // 카드 제목 세션 제목 등
