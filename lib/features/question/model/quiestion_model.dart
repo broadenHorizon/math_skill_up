@@ -33,7 +33,7 @@ class Fraction {
     }
   }
 
-  /// 퍼센트 값 계산 (읽기 전용)
+  /// 퍼센트 값 계산
   double get percent {
     final rawValue = numerator / denominator * 100;
     return double.parse(rawValue.toStringAsFixed(4)); // 소수점 4자리까지만 (그 밑은 버림)
