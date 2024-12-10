@@ -27,7 +27,7 @@ enum QuestionCount {
   @HiveField(2)
   thirty('30'), // 30 문항
   @HiveField(3)
-  fort('40'), // 40 문항
+  forty('40'), // 40 문항
   @HiveField(4)
   fifty('50'); // 50 문항
 
@@ -57,15 +57,15 @@ enum ArithmeticType {
 @HiveType(typeId: 5)
 enum DigitCount {
   @HiveField(0)
-  ten('10'), // 10 자리
+  one('1'), // 1 자리
   @HiveField(1)
-  twenty('20'), // 20 자리
+  two('2'), // 2 자리
   @HiveField(2)
-  thirty('30'), // 30 자리
+  three('3'), // 3 자리
   @HiveField(3)
-  forty('40'), // 40 자리
+  four('4'), // 4 자리
   @HiveField(4)
-  fifty('50'); // 50 자리
+  five('5'); // 5 자리
 
   final String displayName;
 
