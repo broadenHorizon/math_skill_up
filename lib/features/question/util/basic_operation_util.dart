@@ -22,13 +22,13 @@ int getDigitNumber(DigitCount digitCount) {
 double calculator(num1, num2, operator) {
   switch (operator) {
     case ArithmeticType.addition:
-      return num1 + num2;
+      return (num1 + num2).toDouble();
     case ArithmeticType.subtraction:
-      return num1 - num2;
+      return num1 - num2.toDouble();
     case ArithmeticType.multiplication:
-      return num1 * num2;
+      return num1 * num2.toDouble();
     case ArithmeticType.division:
-      return num1 / num2;
+      return num1 / num2.toDouble();
   }
   return -1;
 }

@@ -79,20 +79,20 @@ class AppThemeData {
      */
     // 일반 페이지 제목, 주요 타이틀
     titleLarge: TextStyle(
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,
+      fontSize: 22.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
     // 카드 제목, 세션 제목 등
     titleMedium: TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w600,
+      fontSize: 20.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
     // 카드 제목 세션 제목 등
     titleSmall: TextStyle(
-      fontSize: 16.0,
-      fontWeight: FontWeight.w500,
+      fontSize: 18.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
 

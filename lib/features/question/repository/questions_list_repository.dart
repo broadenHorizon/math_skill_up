@@ -10,10 +10,6 @@ part 'questions_list_repository.g.dart';
 class QuestionsListRepository extends _$QuestionsListRepository {
   @override
   List<Question> build() {
-    return [];
-  }
-
-  void createNewQuestionsList() {
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
 
@@ -31,7 +27,6 @@ class QuestionsListRepository extends _$QuestionsListRepository {
         break;
     }
 
-    // 상태 업데이트
-    state = newQuestionsList;
+    return newQuestionsList;
   }
 }
