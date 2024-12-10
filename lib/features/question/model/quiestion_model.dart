@@ -2,8 +2,6 @@ import 'package:math_skill_up/features/home/model/question_settings_model.dart';
 
 class Question {}
 
-enum Operator { addition, subtraction, multiplication, division }
-
 /// 사칙 연산 모델
 class BasicOperationQuestion extends Question {
   final int id;
@@ -21,13 +19,44 @@ class BasicOperationQuestion extends Question {
 }
 
 /// 분수 비교 모델
+
+class Fraction {
+  final int numerator; // 분자
+  final int denominator; // 분모
+
+  Fraction({
+    required this.numerator,
+    required this.denominator,
+  }) {
+    if (denominator == 0) {
+      throw ArgumentError('Denominator cannot be zero.');
+    }
+  }
+
+  /// 퍼센트 값 계산 (읽기 전용)
+  double get percent {
+    final rawValue = numerator / denominator * 100;
+    return double.parse(rawValue.toStringAsFixed(4)); // 소수점 4자리까지만 (그 밑은 버림)
+  }
+
+  double get value => numerator / denominator;
+}
+
+enum FractionOperationAnswer { first, second }
+
 class FractionOperationQuestion extends Question {
   final int id;
-  final String question;
-  final int answer;
+  final FractionType type;
+  final Fraction firstFraction;
+  final Fraction secondFraction;
+  final FractionOperationAnswer biggerFraction;
 
   FractionOperationQuestion(
-      {required this.id, required this.question, required this.answer});
+      {required this.id,
+      required this.type,
+      required this.firstFraction,
+      required this.secondFraction,
+      required this.biggerFraction});
 }
 
 /// 알파벳 연산 모델
