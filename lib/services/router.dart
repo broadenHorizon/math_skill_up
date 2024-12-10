@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:math_skill_up/features/basic_calculation/presentation/basic_calculation_page.dart';
 import 'package:math_skill_up/features/history/presentation/history_screen.dart';
 import 'package:math_skill_up/features/home/presentation/home_screen.dart';
+import 'package:math_skill_up/features/question_setting/presentation/question_setting_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -24,6 +26,26 @@ GoRouter router(Ref ref) {
         path: '/history',
         builder: (_, __) => const HistoryPage(),
       ),
+      GoRoute(
+        path: '/question-setting',
+        pageBuilder: (_, __) => CustomTransitionPage(
+          child: const QuestionSettingScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0, 1); // 아래에서 위로
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            final offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
+        ),
+      )
     ],
   );
   ref.onDispose(router.dispose);

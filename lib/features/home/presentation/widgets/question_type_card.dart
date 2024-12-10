@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:math_skill_up/features/home/model/question_type_model.dart';
 
 class MyWidget extends StatelessWidget {
@@ -58,7 +59,7 @@ class QuestionTypeCard extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // 버튼 클릭 시 동작 추가
+                    context.push('/question-setting');
                   },
                   child: Text(
                     '변경하기',
