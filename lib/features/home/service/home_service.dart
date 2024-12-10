@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_skill_up/features/home/model/question_settings_model.dart';
+import 'package:math_skill_up/features/home/model/question_setting_model.dart';
 import 'package:math_skill_up/features/home/model/question_type_model.dart';
-import 'package:math_skill_up/features/home/repository/hive_question_settings_repository.dart';
+import 'package:math_skill_up/features/home/repository/hive_question_setting_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_service.g.dart';
@@ -19,7 +19,7 @@ class HomeService {
   });
 
   QuestionTypeModel getSettingsDisplay() {
-    final asyncSettings = ref.watch(hiveQuestionSettingsRepositoryProvider);
+    final asyncSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
 
     // 문제 유형 및 문항 수 기본값 설정
     String type = "알 수 없음";

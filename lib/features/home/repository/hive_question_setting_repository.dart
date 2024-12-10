@@ -1,18 +1,18 @@
 import 'package:hive/hive.dart';
-import 'package:math_skill_up/features/home/model/question_settings_model.dart';
-import 'package:math_skill_up/features/home/repository/question_settings_repository.dart';
+import 'package:math_skill_up/features/home/model/question_setting_model.dart';
+import 'package:math_skill_up/features/home/repository/question_setting_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'hive_question_settings_repository.g.dart';
+part 'hive_question_setting_repository.g.dart';
 
 @riverpod
-class HiveQuestionSettingsRepository extends _$HiveQuestionSettingsRepository
-    implements QuestionSettingsRepository {
+class HiveQuestionSettingRepository extends _$HiveQuestionSettingRepository
+    implements QuestionSettingRepository {
   static const String _boxName = "questionSettingsBox";
   final String _key = "settings";
 
   // QuestionSettingsModel 데이터를 저장할 Hive Box
-  late Box<QuestionSettingsModel> _box;
+  late Box<QuestionSettingModel> _box;
 
   Future<void> _initBox() async {
     if (!Hive.isAdapterRegistered(2)) {
@@ -31,14 +31,14 @@ class HiveQuestionSettingsRepository extends _$HiveQuestionSettingsRepository
       Hive.registerAdapter(FractionTypeAdapter());
     }
     if (!Hive.isAdapterRegistered(7)) {
-      Hive.registerAdapter(QuestionSettingsModelAdapter());
+      Hive.registerAdapter(QuestionSettingModelAdapter());
     }
 
-    _box = await Hive.openBox<QuestionSettingsModel>(_boxName);
+    _box = await Hive.openBox<QuestionSettingModel>(_boxName);
 
     // 저장된 값이 없을 경우 초기값 설정
     if (_box.isEmpty) {
-      final defaultSettings = QuestionSettingsModel(
+      final defaultSettings = QuestionSettingModel(
         problemType: QuestionType.arithmetic, // 사칙연산
         questionCount: QuestionCount.ten, // 10문항
         arithmeticType: ArithmeticType.addition, // 덧셈
@@ -49,13 +49,13 @@ class HiveQuestionSettingsRepository extends _$HiveQuestionSettingsRepository
   }
 
   @override
-  Future<QuestionSettingsModel?> build() async {
+  Future<QuestionSettingModel?> build() async {
     await _initBox();
     return _box.get(_key); // key 'settings'로 저장된 데이터를 불러옴
   }
 
   @override
-  Future<void> saveSettings(QuestionSettingsModel settings) async {
+  Future<void> save(QuestionSettingModel settings) async {
     await _initBox();
     await _box.put(_key, settings); // key 'settings'로 데이터를 저장
   }

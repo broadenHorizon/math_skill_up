@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'question_settings_model.g.dart';
+part 'question_setting_model.g.dart';
 
 // 문제 유형 enum
 @HiveType(typeId: 2)
@@ -87,7 +87,7 @@ enum FractionType {
 
 // 문제 모델
 @HiveType(typeId: 7)
-class QuestionSettingsModel {
+class QuestionSettingModel {
   @HiveField(0)
   final QuestionType problemType; // 문제 유형
   @HiveField(1)
@@ -99,7 +99,7 @@ class QuestionSettingsModel {
   @HiveField(4)
   final FractionType? fractionType; // 분수 세부 유형 (nullable)
 
-  QuestionSettingsModel({
+  QuestionSettingModel({
     required this.problemType,
     required this.questionCount,
     this.arithmeticType,
