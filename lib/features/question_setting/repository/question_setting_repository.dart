@@ -1,4 +1,4 @@
-import 'package:math_skill_up/features/home/model/question_setting_model.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 abstract class QuestionSettingRepository {
   Future<QuestionSettingModel?> build(); // 설정 불러오기

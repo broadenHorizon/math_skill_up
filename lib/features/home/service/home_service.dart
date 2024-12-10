@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_skill_up/features/home/model/question_setting_model.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:math_skill_up/features/home/model/question_type_model.dart';
-import 'package:math_skill_up/features/home/repository/hive_question_setting_repository.dart';
+import 'package:math_skill_up/features/question_setting/repository/hive_question_setting_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_service.g.dart';
