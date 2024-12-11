@@ -22,71 +22,83 @@ class _SlidingToggleButtonState<T extends Enum>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          widget.title,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final buttonWidth = constraints.maxWidth / widget.values.length;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final buttonWidth =
+                      constraints.maxWidth / widget.values.length;
 
-              return Stack(
-                children: [
-                  // Animated background for the selected button
-                  AnimatedPositioned(
-                    left: _selectedIndex * buttonWidth,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut,
-                    child: Container(
-                      width: buttonWidth,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  // Options (foreground text)
-                  Row(
-                    children: List.generate(widget.values.length, (index) {
-                      final isSelected = _selectedIndex == index;
-                      final option = widget.values[index];
-
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedIndex = index;
-                            });
-                            widget.onOptionSelected(option);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 48,
-                            child: Text(
-                              (option as dynamic).displayName ??
-                                  option.toString(),
-                              style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                  return Stack(
+                    children: [
+                      // Animated background for the selected button
+                      AnimatedPositioned(
+                        left: _selectedIndex * buttonWidth,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        child: Container(
+                          width: buttonWidth,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                      );
-                    }),
-                  ),
-                ],
-              );
-            },
+                      ),
+                      // Options (foreground text)
+                      Row(
+                        children: List.generate(widget.values.length, (index) {
+                          final isSelected = _selectedIndex == index;
+                          final option = widget.values[index];
+
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+                                widget.onOptionSelected(option);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 48,
+                                child: Text(
+                                  (option as dynamic).displayName ??
+                                      option.toString(),
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
