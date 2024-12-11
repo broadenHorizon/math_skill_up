@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_skill_up/core/constants/constants.dart';
 import 'package:math_skill_up/features/history/model/history_model.dart';
 import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 // TODO: 임시로 history 저장 및 조회 로직을 넣었고, 차후 수정 예정
 
@@ -71,7 +71,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
 
                 final newHistory = History(
                   date: DateTime.now(),
-                  questionType: QuestionType.basic, // 기본 문제 유형으로 고정
+                  questionType: QuestionType.arithmetic, // 기본 문제 유형으로 고정
                   elapsedTime: elapsedTime,
                   accuracy: accuracy,
                 );

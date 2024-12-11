@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:math_skill_up/core/constants/constants.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 part 'history_model.g.dart';
 

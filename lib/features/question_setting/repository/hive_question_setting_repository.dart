@@ -39,7 +39,7 @@ class HiveQuestionSettingRepository extends _$HiveQuestionSettingRepository
     // 저장된 값이 없을 경우 초기값 설정
     if (_box.isEmpty) {
       final defaultSettings = QuestionSettingModel(
-        problemType: QuestionType.arithmetic, // 사칙연산
+        questionType: QuestionType.arithmetic, // 사칙연산
         questionCount: QuestionCount.ten, // 10문항
         arithmeticType: ArithmeticType.addition, // 덧셈
         digitCount: DigitCount.one, // 1자리

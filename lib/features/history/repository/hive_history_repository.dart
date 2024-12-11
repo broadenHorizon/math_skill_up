@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:math_skill_up/core/constants/constants.dart';
 import 'package:math_skill_up/features/history/model/history_model.dart';
 import 'package:math_skill_up/features/history/repository/history_repository.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'hive_history_repository.g.dart';

@@ -28,7 +28,7 @@ class HomeService {
     if (asyncSettings.hasValue) {
       final settings = asyncSettings.value!;
 
-      switch (settings.problemType) {
+      switch (settings.questionType) {
         case QuestionType.arithmetic:
           final digit = settings.digitCount?.displayName ?? "n/a";
           final arithmetic = settings.arithmeticType?.displayName ?? "n/a";

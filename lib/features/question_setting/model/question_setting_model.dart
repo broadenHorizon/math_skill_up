@@ -89,7 +89,7 @@ enum FractionType {
 @HiveType(typeId: 7)
 class QuestionSettingModel {
   @HiveField(0)
-  final QuestionType problemType; // 문제 유형
+  final QuestionType questionType; // 문제 유형
   @HiveField(1)
   final QuestionCount questionCount; // 문항 수
   @HiveField(2)
@@ -100,7 +100,7 @@ class QuestionSettingModel {
   final FractionType? fractionType; // 분수 세부 유형 (nullable)
 
   QuestionSettingModel({
-    required this.problemType,
+    required this.questionType,
     required this.questionCount,
     this.arithmeticType,
     this.digitCount,
