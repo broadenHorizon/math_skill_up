@@ -10,8 +10,8 @@ class QuestionAppBar extends ConsumerWidget {
     return Container(
       height: 60,
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.gray200)),
-      ),
+          border: Border(bottom: BorderSide(color: AppColors.gray200)),
+          color: AppColors.white),
       child: Stack(
         children: [
           Align(

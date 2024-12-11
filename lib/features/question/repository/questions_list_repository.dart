@@ -8,25 +8,29 @@ part 'questions_list_repository.g.dart';
 
 @riverpod
 class QuestionsListRepository extends _$QuestionsListRepository {
+  late List<Question> _cachedQuestionsList;
+
   @override
   List<Question> build() {
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
 
-    List<Question> newQuestionsList = [];
+    _cachedQuestionsList = _createQuestions(settings);
+    return _cachedQuestionsList;
+  }
 
+  List<Question> get questionsList => _cachedQuestionsList;
+
+  List<Question> _createQuestions(QuestionSettingsModel settings) {
     switch (settings.problemType) {
       case QuestionType.arithmetic:
-        newQuestionsList = createBasicQuestions(settings);
-        break;
+        return createBasicQuestions(settings);
       case QuestionType.fraction:
-        newQuestionsList = createFractionQuestions(settings);
-        break;
+        return createFractionQuestions(settings);
       case QuestionType.alphabet:
-        newQuestionsList = createAlphabetQuestions(settings);
-        break;
+        return createAlphabetQuestions(settings);
+      default:
+        return [];
     }
-
-    return newQuestionsList;
   }
 }
