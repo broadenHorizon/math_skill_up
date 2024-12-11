@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class SlidingToggleButton<T extends Enum> extends StatefulWidget {
   final String title; // 제목
+  final T value; // 현재 값
   final List<T> values; // Enum 값 리스트
   final void Function(T selectedOption) onOptionSelected; // 선택된 옵션 콜백
 
   const SlidingToggleButton({
     super.key,
     required this.title,
+    required this.value,
     required this.values,
     required this.onOptionSelected,
   });
@@ -18,7 +20,25 @@ class SlidingToggleButton<T extends Enum> extends StatefulWidget {
 
 class _SlidingToggleButtonState<T extends Enum>
     extends State<SlidingToggleButton<T>> {
-  int _selectedIndex = 0; // 선택된 버튼의 인덱스
+  late int _selectedIndex; // 선택된 버튼의 인덱스
+
+  @override
+  void initState() {
+    super.initState();
+    // 초기 인덱스를 현재 value의 위치로 설정
+    _selectedIndex = widget.values.indexOf(widget.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant SlidingToggleButton<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // value가 변경되면 _selectedIndex를 업데이트
+    if (widget.value != oldWidget.value) {
+      setState(() {
+        _selectedIndex = widget.values.indexOf(widget.value);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
