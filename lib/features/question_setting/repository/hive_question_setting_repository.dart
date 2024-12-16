@@ -15,7 +15,7 @@ class HiveQuestionSettingRepository extends _$HiveQuestionSettingRepository
   // QuestionSettingsModel 데이터를 저장할 Hive Box
   late Box<QuestionSettingModel> _box;
 
-  Future<void> _initBox() async {
+  Future<QuestionSettingModel> _initBox() async {
     if (!Hive.isAdapterRegistered(2)) {
       Hive.registerAdapter(QuestionTypeAdapter());
     }
@@ -38,22 +38,23 @@ class HiveQuestionSettingRepository extends _$HiveQuestionSettingRepository
     _box = await Hive.openBox<QuestionSettingModel>(_boxName);
 
     // 저장된 값이 없을 경우 초기값 설정
-    if (_box.isEmpty) {
-      await _box.put(_key, initialSetting);
-    }
-  }
-
-  @override
-  Future<QuestionSettingModel> build() async {
-    await _initBox();
     QuestionSettingModel? setting = _box.get(_key);
-    if (setting == null) return initialSetting;
+    if (setting == null) {
+      await _box.put(_key, initialSetting);
+      setting = initialSetting;
+    }
+
     return setting;
   }
 
   @override
-  Future<void> save(QuestionSettingModel settings) async {
-    await _initBox();
-    await _box.put(_key, settings); // key 'settings'로 데이터를 저장
+  Future<QuestionSettingModel> build() async {
+    return await _initBox();
+  }
+
+  @override
+  Future<void> save(QuestionSettingModel setting) async {
+    await _box.put(_key, setting); // key 'settings'로 데이터를 저장
+    state = AsyncData(setting);
   }
 }

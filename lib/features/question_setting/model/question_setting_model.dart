@@ -107,3 +107,21 @@ class QuestionSettingModel {
     required this.fractionType,
   });
 }
+
+extension QuestionSettingModelCopyWith on QuestionSettingModel {
+  QuestionSettingModel copyWith({
+    QuestionType? questionType,
+    QuestionCount? questionCount,
+    ArithmeticType? arithmeticType,
+    DigitCount? digitCount,
+    FractionType? fractionType,
+  }) {
+    return QuestionSettingModel(
+      questionType: questionType ?? this.questionType,
+      questionCount: questionCount ?? this.questionCount,
+      arithmeticType: arithmeticType ?? this.arithmeticType,
+      digitCount: digitCount ?? this.digitCount,
+      fractionType: fractionType ?? this.fractionType,
+    );
+  }
+}
