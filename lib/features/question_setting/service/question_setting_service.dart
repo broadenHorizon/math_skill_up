@@ -13,7 +13,11 @@ QuestionSettingService questionSettingService(Ref ref) {
 
 class QuestionSettingService {
   final Ref ref;
-  QuestionSettingModel _currentSetting = initialSetting;
+  QuestionType _selectedQuestionType = initialSetting.questionType;
+  QuestionCount _selectedQuestionCount = initialSetting.questionCount;
+  ArithmeticType _selectedArithmeticType = initialSetting.arithmeticType;
+  DigitCount _selectedDigitCount = initialSetting.digitCount;
+  FractionType _selectedFractionType = initialSetting.fractionType;
 
   QuestionSettingService({
     required this.ref,
@@ -22,20 +26,42 @@ class QuestionSettingService {
     _initializeSettings();
   }
 
-  QuestionSettingModel get currentSetting => _currentSetting;
+  QuestionType get selectedQuestionType => _selectedQuestionType;
+  QuestionCount get selectedQuestionCount => _selectedQuestionCount;
+  ArithmeticType get selectedArithmeticType => _selectedArithmeticType;
+  DigitCount get selectedDigitCount => _selectedDigitCount;
+  FractionType get selectedFractionType => _selectedFractionType;
 
   Future<void> _initializeSettings() async {
     // HiveQuestionSettingRepository를 가져와 데이터를 초기화
     final asyncSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
     if (asyncSettings.hasValue) {
-      _currentSetting = asyncSettings.value!;
+      final settings = asyncSettings.value!;
+      _selectedQuestionType = settings.questionType;
+      _selectedQuestionCount = settings.questionCount;
+      _selectedArithmeticType = settings.arithmeticType;
+      _selectedDigitCount = settings.digitCount;
+      _selectedFractionType = settings.fractionType;
     }
   }
 
-  // Future<void> updateSetting(QuestionSettingModel newSetting) async {
-  //   // 설정 업데이트
-  //   _currentSetting = newSetting;
-  //   final repository = ref.read(hiveQuestionSettingRepositoryProvider);
-  //   await repository.saveQuestionSettings(newSetting);
-  // }
+  void setQuestionType(QuestionType questionType) {
+    _selectedQuestionType = questionType;
+  }
+
+  void setQuestionCount(QuestionCount questionCount) {
+    _selectedQuestionCount = questionCount;
+  }
+
+  void setArithmeticType(ArithmeticType arithmeticType) {
+    _selectedArithmeticType = arithmeticType;
+  }
+
+  void setDigitCount(DigitCount digitCount) {
+    _selectedDigitCount = digitCount;
+  }
+
+  void setFractionType(FractionType fractionType) {
+    _selectedFractionType = fractionType;
+  }
 }
