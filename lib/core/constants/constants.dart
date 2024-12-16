@@ -6,5 +6,6 @@ final QuestionSettingModel initialSetting = QuestionSettingModel(
   questionType: QuestionType.arithmetic,
   questionCount: QuestionCount.ten,
   arithmeticType: ArithmeticType.addition,
+  fractionType: FractionType.fraction,
   digitCount: DigitCount.one,
 );
