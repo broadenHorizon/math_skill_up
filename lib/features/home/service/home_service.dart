@@ -30,12 +30,12 @@ class HomeService {
 
       switch (settings.questionType) {
         case QuestionType.arithmetic:
-          final digit = settings.digitCount?.displayName ?? "n/a";
-          final arithmetic = settings.arithmeticType?.displayName ?? "n/a";
+          final digit = settings.digitCount.displayName;
+          final arithmetic = settings.arithmeticType.displayName;
           type = "$digit 자리 $arithmetic"; // 예: "10 자리 덧셈"
           break;
         case QuestionType.fraction:
-          type = "${settings.fractionType?.displayName ?? "n/a"} 비교";
+          type = "${settings.fractionType.displayName} 비교";
           break;
         case QuestionType.alphabet:
           type = "알파벳 계산";

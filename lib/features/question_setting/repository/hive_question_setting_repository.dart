@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:math_skill_up/core/constants/constants.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:math_skill_up/features/question_setting/repository/question_setting_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -38,20 +39,16 @@ class HiveQuestionSettingRepository extends _$HiveQuestionSettingRepository
 
     // 저장된 값이 없을 경우 초기값 설정
     if (_box.isEmpty) {
-      final defaultSettings = QuestionSettingModel(
-        questionType: QuestionType.arithmetic, // 사칙연산
-        questionCount: QuestionCount.ten, // 10문항
-        arithmeticType: ArithmeticType.addition, // 덧셈
-        digitCount: DigitCount.one, // 1자리
-      );
-      await _box.put('settings', defaultSettings);
+      await _box.put(_key, initialSetting);
     }
   }
 
   @override
-  Future<QuestionSettingModel?> build() async {
+  Future<QuestionSettingModel> build() async {
     await _initBox();
-    return _box.get(_key); // key 'settings'로 저장된 데이터를 불러옴
+    QuestionSettingModel? setting = _box.get(_key);
+    if (setting == null) return initialSetting;
+    return setting;
   }
 
   @override

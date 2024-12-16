@@ -93,17 +93,17 @@ class QuestionSettingModel {
   @HiveField(1)
   final QuestionCount questionCount; // 문항 수
   @HiveField(2)
-  final ArithmeticType? arithmeticType; // 사칙연산 유형 (nullable)
+  final ArithmeticType arithmeticType; // 사칙연산 유형
   @HiveField(3)
-  final DigitCount? digitCount; // 사칙연산 자리수 (nullable)
+  final DigitCount digitCount; // 사칙연산 자리수
   @HiveField(4)
-  final FractionType? fractionType; // 분수 세부 유형 (nullable)
+  final FractionType fractionType; // 분수 세부 유형
 
   QuestionSettingModel({
     required this.questionType,
     required this.questionCount,
-    this.arithmeticType,
-    this.digitCount,
-    this.fractionType,
+    required this.arithmeticType,
+    required this.digitCount,
+    required this.fractionType,
   });
 }
