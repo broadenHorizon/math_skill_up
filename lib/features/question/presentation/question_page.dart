@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_box.dart';
-import 'package:math_skill_up/features/question/presentation/widgets/memo_box.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/expanded_memo_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_app_bar.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_box.dart';
 
@@ -27,9 +26,15 @@ class _QuestionPageState extends State<QuestionPage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final screenHeight = MediaQuery.of(context).size.height;
 
     _questionBoxHeight = Tween<double>(
-      begin: 300.0,
+      begin: screenHeight * 0.4,
       end: 100.0,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -38,7 +43,7 @@ class _QuestionPageState extends State<QuestionPage>
 
     _memoBoxHeight = Tween<double>(
       begin: 50.0,
-      end: 200.0,
+      end: screenHeight * 0.4 - 50,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -94,6 +99,7 @@ class _QuestionPageState extends State<QuestionPage>
                 ],
               ),
             ),
+            const SizedBox(height: 20.0),
             const KeypadBox(),
           ],
         ),

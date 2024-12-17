@@ -62,9 +62,17 @@ class FractionOperationQuestion extends Question {
 /// 알파벳 연산 모델
 class AlphabetOperationQuestion extends Question {
   final int id;
-  final String question;
+  final String? firstAlphabet;
+  final ArithmeticType operator;
+  final int? secondNumber;
+  final String? resultAlphabet;
   final String answer;
 
   AlphabetOperationQuestion(
-      {required this.id, required this.question, required this.answer});
+      {required this.id,
+      required this.firstAlphabet,
+      required this.operator,
+      required this.secondNumber,
+      required this.resultAlphabet,
+      required this.answer});
 }

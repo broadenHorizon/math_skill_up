@@ -5,15 +5,15 @@ import 'package:math_skill_up/features/home/model/question_settings_model.dart';
 /// DigitCount 타입을 정수로 변환합니다.
 int getDigitNumber(DigitCount digitCount) {
   switch (digitCount) {
-    case DigitCount.ten:
+    case DigitCount.one:
       return 1;
-    case DigitCount.twenty:
+    case DigitCount.two:
       return 2;
-    case DigitCount.thirty:
+    case DigitCount.three:
       return 3;
-    case DigitCount.forty:
+    case DigitCount.four:
       return 4;
-    case DigitCount.fifty:
+    case DigitCount.five:
       return 5;
   }
 }
@@ -37,11 +37,11 @@ double calculator(num1, num2, operator) {
     case ArithmeticType.addition:
       return (num1 + num2).toDouble();
     case ArithmeticType.subtraction:
-      return num1 - num2.toDouble();
+      return (num1 - num2).toDouble();
     case ArithmeticType.multiplication:
-      return num1 * num2.toDouble();
+      return (num1 * num2).toDouble();
     case ArithmeticType.division:
-      return num1 / num2.toDouble();
+      return (num1 / num2).toDouble();
   }
   return -1;
 }

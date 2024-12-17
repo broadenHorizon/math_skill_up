@@ -8,9 +8,9 @@ class KeypadBox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    return Expanded(
+        child: Container(
       color: AppColors.white,
-      height: 386,
       child: Column(
         children: [
           const KeypadHeader(),
@@ -20,6 +20,6 @@ class KeypadBox extends ConsumerWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }
