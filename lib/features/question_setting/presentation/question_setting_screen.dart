@@ -97,24 +97,6 @@ class QuestionSettingScreen extends ConsumerWidget {
             },
             text: '적용'),
       ),
-
-      // Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: ElevatedButton(
-      //     onPressed: () {
-      //       // 적용 버튼 클릭 시 동작 추가
-      //       questionSettingService.saveAll();
-      //       ScaffoldMessenger.of(context).showSnackBar(
-      //         const SnackBar(content: Text('설정이 적용되었습니다.')),
-      //       );
-      //       context.pop();
-      //     },
-      //     style: ElevatedButton.styleFrom(
-      //       minimumSize: const Size(double.infinity, 50), // 버튼 크기
-      //     ),
-      //     child: const Text('적용'),
-      //   ),
-      // ),
     );
   }
 }
