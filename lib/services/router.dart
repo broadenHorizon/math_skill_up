@@ -28,26 +28,32 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/question-setting',
-        pageBuilder: (_, __) => CustomTransitionPage(
-          child: const QuestionSettingScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0, 1); // 아래에서 위로
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
-
-            final tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            final offsetAnimation = animation.drive(tween);
-
-            return SlideTransition(
-              position: offsetAnimation,
-              child: child,
-            );
-          },
+        pageBuilder: (_, __) => const CustomTransitionPage(
+          child: QuestionSettingScreen(),
+          transitionsBuilder: slideTransitionFromBottom,
         ),
       )
     ],
   );
   ref.onDispose(router.dispose);
   return router;
+}
+
+Widget slideTransitionFromBottom(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
+  const begin = Offset(0, 1); // 시작점 (아래에서 위로)
+  const end = Offset.zero; // 종료점
+  const curve = Curves.easeInOut; // 전환 곡선
+
+  final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  final offsetAnimation = animation.drive(tween);
+
+  return SlideTransition(
+    position: offsetAnimation,
+    child: child,
+  );
 }
