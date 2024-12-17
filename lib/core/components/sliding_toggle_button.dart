@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class SlidingToggleButton<T extends Enum> extends StatefulWidget {
+class SlidingToggleButton<T extends Enum> extends HookWidget {
   final String title; // 제목
   final T value; // 현재 값
   final List<T> values; // Enum 값 리스트
@@ -15,40 +16,23 @@ class SlidingToggleButton<T extends Enum> extends StatefulWidget {
   });
 
   @override
-  State<SlidingToggleButton<T>> createState() => _SlidingToggleButtonState<T>();
-}
-
-class _SlidingToggleButtonState<T extends Enum>
-    extends State<SlidingToggleButton<T>> {
-  late int _selectedIndex; // 선택된 버튼의 인덱스
-
-  @override
-  void initState() {
-    super.initState();
-    // 초기 인덱스를 현재 value의 위치로 설정
-    _selectedIndex = widget.values.indexOf(widget.value);
-  }
-
-  @override
-  void didUpdateWidget(covariant SlidingToggleButton<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // value가 변경되면 _selectedIndex를 업데이트
-    if (widget.value != oldWidget.value) {
-      setState(() {
-        _selectedIndex = widget.values.indexOf(widget.value);
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // 상태 관리: 현재 선택된 인덱스
+    final selectedIndex = useState(values.indexOf(value));
+
+    // value가 변경될 때 selectedIndex를 업데이트
+    useEffect(() {
+      selectedIndex.value = values.indexOf(value);
+      return null;
+    }, [value]);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            widget.title,
+            title,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(width: 16),
@@ -60,14 +44,13 @@ class _SlidingToggleButtonState<T extends Enum>
               ),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final buttonWidth =
-                      constraints.maxWidth / widget.values.length;
+                  final buttonWidth = constraints.maxWidth / values.length;
 
                   return Stack(
                     children: [
                       // Animated background for the selected button
                       AnimatedPositioned(
-                        left: _selectedIndex * buttonWidth,
+                        left: selectedIndex.value * buttonWidth,
                         duration: const Duration(milliseconds: 200),
                         curve: Curves.easeInOut,
                         child: Container(
@@ -81,17 +64,15 @@ class _SlidingToggleButtonState<T extends Enum>
                       ),
                       // Options (foreground text)
                       Row(
-                        children: List.generate(widget.values.length, (index) {
-                          final isSelected = _selectedIndex == index;
-                          final option = widget.values[index];
+                        children: List.generate(values.length, (index) {
+                          final isSelected = selectedIndex.value == index;
+                          final option = values[index];
 
                           return Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                                widget.onOptionSelected(option);
+                                selectedIndex.value = index;
+                                onOptionSelected(option);
                               },
                               child: Container(
                                 alignment: Alignment.center,
