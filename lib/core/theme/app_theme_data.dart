@@ -5,13 +5,15 @@ class AppThemeData {
   static final ThemeData light = ThemeData(
     // Color Scheme
     colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        surface: AppColors.gray100,
-        primaryContainer: AppColors.offWhite,
-        secondaryContainer: AppColors.gray100,
-        shadow: AppColors.gray300,
-        outline: AppColors.gray200,
-        error: AppColors.error),
+      primary: AppColors.primary,
+      surface: AppColors.gray100,
+      primaryContainer: AppColors.offWhite,
+      secondaryContainer: AppColors.gray100,
+      shadow: AppColors.gray300,
+      outline: AppColors.gray200,
+      error: AppColors.error,
+      inversePrimary: AppColors.white,
+    ),
 
     // Text Color
     textTheme: textTheme.copyWith(),
@@ -23,13 +25,15 @@ class AppThemeData {
   static final ThemeData dark = ThemeData(
     // Color Scheme
     colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryDark,
-        surface: AppColors.black,
-        primaryContainer: AppColors.gray400,
-        secondaryContainer: AppColors.gray200,
-        shadow: AppColors.gray200,
-        outline: AppColors.gray100,
-        error: AppColors.errorDark),
+      primary: AppColors.primaryDark,
+      surface: AppColors.black,
+      primaryContainer: AppColors.gray400,
+      secondaryContainer: AppColors.gray200,
+      shadow: AppColors.gray200,
+      outline: AppColors.gray100,
+      error: AppColors.errorDark,
+      inversePrimary: AppColors.black,
+    ),
 
     // Text Color
     textTheme: textTheme.copyWith(
@@ -124,7 +128,7 @@ class AppThemeData {
       color: AppColors.black,
     ),
     labelMedium: TextStyle(
-      fontSize: 12.0,
+      fontSize: 15.0,
       fontWeight: FontWeight.bold,
       color: AppColors.black,
     ),

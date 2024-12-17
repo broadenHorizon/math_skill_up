@@ -80,12 +80,15 @@ class SlidingToggleButton<T extends Enum> extends HookWidget {
                                 child: Text(
                                   (option as dynamic).displayName ??
                                       option.toString(),
-                                  style: TextStyle(
-                                    color: isSelected
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.copyWith(
+                                          color: isSelected
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .inversePrimary
+                                              : null),
                                 ),
                               ),
                             ),
