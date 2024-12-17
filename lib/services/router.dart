@@ -14,6 +14,10 @@ GoRouter router(Ref ref) {
     initialLocation: '/question', //TODO: 임시로 변경, home으로 변경되어야함
     routes: [
       GoRoute(
+        path: '/',
+        builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
         path: '/basic-calulation',
         builder: (_, __) => const BasicCalculationPage(),
       ),
