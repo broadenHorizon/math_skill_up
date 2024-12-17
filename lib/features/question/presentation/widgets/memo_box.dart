@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_skill_up/core/theme/app_colors.dart';
 
-// Updated ExpandedMemoBox
-// Updated ExpandedMemoBox
 class ExpandedMemoBox extends StatelessWidget {
   const ExpandedMemoBox(
       {super.key, required this.height, required this.onExpandChanged});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
-import 'package:math_skill_up/features/home/service/home_service.dart';
 import 'package:math_skill_up/features/question/model/quiestion_model.dart';
 import 'package:math_skill_up/features/question/repository/questions_list_repository.dart';
 import 'package:math_skill_up/features/question/util/basic_operation_util.dart';

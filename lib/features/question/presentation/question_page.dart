@@ -32,9 +32,13 @@ class _QuestionPageState extends State<QuestionPage>
   void didChangeDependencies() {
     super.didChangeDependencies();
     final screenHeight = MediaQuery.of(context).size.height;
+    final safeAreaPadding = MediaQuery.of(context).padding;
+    final safeAreaHeight =
+        screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
 
     _questionBoxHeight = Tween<double>(
-      begin: screenHeight * 0.4,
+      // 60: appbar, 20: padding, 340: keypad, 50: memo box height
+      begin: safeAreaHeight - 60 - 20 - 340 - 50,
       end: 100.0,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -43,7 +47,7 @@ class _QuestionPageState extends State<QuestionPage>
 
     _memoBoxHeight = Tween<double>(
       begin: 50.0,
-      end: screenHeight * 0.4 - 50,
+      end: safeAreaHeight - 60 - 20 - 340 - 100,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -72,33 +76,33 @@ class _QuestionPageState extends State<QuestionPage>
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const QuestionAppBar(),
             Expanded(
-              child: Column(
-                children: [
-                  AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return QuestionBox(
-                        target: int.parse(widget.id),
-                        height: _questionBoxHeight.value,
-                      );
-                    },
-                  ),
-                  AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return ExpandedMemoBox(
-                        height: _memoBoxHeight.value,
-                        onExpandChanged: (isExpanded) =>
-                            _toggleMemoExpanded(isExpanded),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
+                child: Column(
+              children: [
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return QuestionBox(
+                      target: int.parse(widget.id),
+                      height: _questionBoxHeight.value,
+                    );
+                  },
+                ),
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return ExpandedMemoBox(
+                      height: _memoBoxHeight.value,
+                      onExpandChanged: (isExpanded) =>
+                          _toggleMemoExpanded(isExpanded),
+                    );
+                  },
+                ),
+              ],
+            )),
             const SizedBox(height: 20.0),
             const KeypadBox(),
           ],
