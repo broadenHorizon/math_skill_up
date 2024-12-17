@@ -58,19 +58,19 @@ class AppThemeData {
     // 앱에서 가장 큰 헤딩. 홈 화면 제목이나 주요 섹션 제목에 사용.
     displayLarge: TextStyle(
       fontSize: 32.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w500,
       color: AppColors.black,
     ),
     // 큰 헤딩
     displayMedium: TextStyle(
       fontSize: 28.0,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
     // 부제목
     displaySmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w300,
       color: AppColors.black,
     ),
 
@@ -79,20 +79,20 @@ class AppThemeData {
      */
     // 일반 페이지 제목, 주요 타이틀
     titleLarge: TextStyle(
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,
+      fontSize: 22.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
     // 카드 제목, 세션 제목 등
     titleMedium: TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w600,
+      fontSize: 20.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
     // 카드 제목 세션 제목 등
     titleSmall: TextStyle(
-      fontSize: 16.0,
-      fontWeight: FontWeight.w500,
+      fontSize: 18.0,
+      fontWeight: FontWeight.normal,
       color: AppColors.black,
     ),
 
