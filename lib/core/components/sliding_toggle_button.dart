@@ -31,9 +31,14 @@ class SlidingToggleButton<T extends Enum> extends HookWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodyLarge,
+          SizedBox(
+            width: 70,
+            child: Center(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
