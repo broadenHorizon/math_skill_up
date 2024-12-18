@@ -46,4 +46,20 @@ class HomeService {
 
     return QuestionTypeModel(type: type, count: count);
   }
+
+  QuestionSettingModel getSettingsData() {
+    final asyncSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
+
+    if (asyncSettings.hasValue) {
+      final settings = asyncSettings.value!;
+      return settings;
+    }
+
+    return QuestionSettingModel(
+        questionType: QuestionType.arithmetic, // 사칙연산
+        questionCount: QuestionCount.ten, // 10문항
+        arithmeticType: ArithmeticType.addition, // 덧셈
+        digitCount: DigitCount.one, // 10자리
+        fractionType: FractionType.fraction);
+  }
 }

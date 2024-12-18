@@ -5,6 +5,7 @@ import 'package:math_skill_up/features/basic_calculation/presentation/basic_calc
 import 'package:math_skill_up/features/history/presentation/history_screen.dart';
 import 'package:math_skill_up/features/home/presentation/home_screen.dart';
 import 'package:math_skill_up/features/question_setting/presentation/question_setting_screen.dart';
+import 'package:math_skill_up/features/question/presentation/question_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -32,7 +33,16 @@ GoRouter router(Ref ref) {
           child: QuestionSettingScreen(),
           transitionsBuilder: slideTransitionFromBottom,
         ),
-      )
+      ),
+      GoRoute(
+        path: '/question',
+        builder: (_, state) =>
+            QuestionPage(state.uri.queryParameters['id'] ?? "0"),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (_, __) => const HomeScreen(),
+      ),
     ],
   );
   ref.onDispose(router.dispose);
