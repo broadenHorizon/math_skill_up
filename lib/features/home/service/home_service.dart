@@ -50,10 +50,10 @@ class HomeService {
   QuestionSettingModel getSettingsData() {
     final asyncSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
 
-    if (asyncSettings.hasValue) {
-      final settings = asyncSettings.value!;
-      return settings;
-    }
+    // if (asyncSettings.hasValue) {
+    //   final settings = asyncSettings.value!;
+    //   return settings;
+    // }
 
     return QuestionSettingModel(
         questionType: QuestionType.arithmetic, // 사칙연산
