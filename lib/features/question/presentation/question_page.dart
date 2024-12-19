@@ -4,6 +4,12 @@ import 'package:math_skill_up/features/question/presentation/widgets/expanded_me
 import 'package:math_skill_up/features/question/presentation/widgets/question_app_bar.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_box.dart';
 
+const appBarHeight = 60.0;
+const paddingHeight = 20.0;
+const keypadHeight = 340.0;
+const minMemoBoxHeight = 50.0;
+const minQuestionBoxHeight = 100.0;
+
 class QuestionPage extends StatefulWidget {
   const QuestionPage(this.id, {super.key});
 
@@ -36,18 +42,28 @@ class _QuestionPageState extends State<QuestionPage>
     final safeAreaHeight =
         screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
 
+    final maxQuestionBoxHeight = safeAreaHeight -
+        appBarHeight -
+        paddingHeight -
+        keypadHeight -
+        minMemoBoxHeight;
+    final maxMemoBoxHeight = safeAreaHeight -
+        appBarHeight -
+        paddingHeight -
+        keypadHeight -
+        minQuestionBoxHeight;
+
     _questionBoxHeight = Tween<double>(
-      // 60: appbar, 20: padding, 340: keypad, 50: memo box height
-      begin: safeAreaHeight - 60 - 20 - 340 - 50,
-      end: 100.0,
+      begin: maxQuestionBoxHeight,
+      end: minQuestionBoxHeight,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     ));
 
     _memoBoxHeight = Tween<double>(
-      begin: 50.0,
-      end: safeAreaHeight - 60 - 20 - 340 - 100,
+      begin: minMemoBoxHeight,
+      end: maxMemoBoxHeight,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -78,7 +94,7 @@ class _QuestionPageState extends State<QuestionPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const QuestionAppBar(),
+            const QuestionAppBar(height: appBarHeight),
             Expanded(
                 child: Column(
               children: [
@@ -103,8 +119,10 @@ class _QuestionPageState extends State<QuestionPage>
                 ),
               ],
             )),
-            const SizedBox(height: 20.0),
-            const KeypadBox(),
+            const SizedBox(height: paddingHeight),
+            const KeypadBox(
+              height: keypadHeight,
+            ),
           ],
         ),
       ),
