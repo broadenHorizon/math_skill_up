@@ -1,26 +1,26 @@
-import 'package:math_skill_up/features/home/model/question_settings_model.dart';
 import 'package:math_skill_up/features/question/constant/alphabet.dart';
 import 'package:math_skill_up/features/question/model/quiestion_model.dart';
 import 'package:math_skill_up/features/question/util/alphabet_operation_util.dart';
 import 'package:math_skill_up/features/question/util/basic_operation_util.dart';
 import 'package:math_skill_up/features/question/util/fraction_operation_util.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 /// 사칙연산 유형의 질문 생성
 List<BasicOperationQuestion> createBasicQuestions(
-    QuestionSettingsModel settings) {
+    QuestionSettingModel settings) {
   final List<BasicOperationQuestion> questions = [];
   final int firstNum =
-      generateRandomInt(digit: getDigitNumber(settings.digitCount!));
+      generateRandomInt(digit: getDigitNumber(settings.digitCount));
   final int secondNum =
-      generateRandomInt(digit: getDigitNumber(settings.digitCount!));
+      generateRandomInt(digit: getDigitNumber(settings.digitCount));
 
   for (int i = 0; i < settings.questionCount.index + 1; i++) {
     questions.add(BasicOperationQuestion(
         id: i + 1,
         firstNum: firstNum,
         secondNum: secondNum,
-        operator: settings.arithmeticType!,
-        answer: calculator(firstNum, secondNum, settings.arithmeticType!)));
+        operator: settings.arithmeticType,
+        answer: calculator(firstNum, secondNum, settings.arithmeticType)));
   }
 
   return questions;
@@ -28,7 +28,7 @@ List<BasicOperationQuestion> createBasicQuestions(
 
 /// 분수 비교 유형의 질문 생성
 List<FractionOperationQuestion> createFractionQuestions(
-    QuestionSettingsModel settings) {
+    QuestionSettingModel settings) {
   final List<FractionOperationQuestion> questions = [];
 
   for (int i = 0; i < settings.questionCount.index + 1; i++) {
@@ -46,7 +46,7 @@ List<FractionOperationQuestion> createFractionQuestions(
     questions.add(
       FractionOperationQuestion(
         id: i + 1,
-        type: settings.fractionType!,
+        type: settings.fractionType,
         firstFraction: firstFraction,
         secondFraction: secondFraction,
         biggerFraction: FractionOperationAnswer.first,
@@ -59,7 +59,7 @@ List<FractionOperationQuestion> createFractionQuestions(
 
 /// 알파벳 계산 유형의 질문 생성
 List<AlphabetOperationQuestion> createAlphabetQuestions(
-    QuestionSettingsModel settings) {
+    QuestionSettingModel settings) {
   final List<AlphabetOperationQuestion> questions = [];
 
   for (int i = 0; i < settings.questionCount.index + 1; i++) {

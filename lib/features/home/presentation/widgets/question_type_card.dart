@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:math_skill_up/core/components/expanded_text_botton.dart';
 import 'package:math_skill_up/features/home/model/question_type_model.dart';
 
 class MyWidget extends StatelessWidget {
@@ -46,26 +48,11 @@ class QuestionTypeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Center(
-              child: SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Theme.of(context).secondaryHeaderColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    // 버튼 클릭 시 동작 추가
-                  },
-                  child: Text(
-                    '변경하기',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-              ),
+            ExpandedTextBotton(
+              onPressed: () {
+                context.push('/question-setting');
+              },
+              text: '변경하기',
             ),
           ],
         ),

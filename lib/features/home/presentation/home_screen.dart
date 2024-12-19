@@ -10,7 +10,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeService = ref.read(homeServiceProvider);
+    final homeService = ref.watch(homeServiceProvider);
 
     return Scaffold(
       appBar: const LogoAppBar(),

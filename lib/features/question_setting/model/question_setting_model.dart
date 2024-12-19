@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'question_settings_model.g.dart';
+part 'question_setting_model.g.dart';
 
 // 문제 유형 enum
 @HiveType(typeId: 2)
@@ -87,23 +87,41 @@ enum FractionType {
 
 // 문제 모델
 @HiveType(typeId: 7)
-class QuestionSettingsModel {
+class QuestionSettingModel {
   @HiveField(0)
-  final QuestionType problemType; // 문제 유형
+  final QuestionType questionType; // 문제 유형
   @HiveField(1)
   final QuestionCount questionCount; // 문항 수
   @HiveField(2)
-  final ArithmeticType? arithmeticType; // 사칙연산 유형 (nullable)
+  final ArithmeticType arithmeticType; // 사칙연산 유형
   @HiveField(3)
-  final DigitCount? digitCount; // 사칙연산 자리수 (nullable)
+  final DigitCount digitCount; // 사칙연산 자리수
   @HiveField(4)
-  final FractionType? fractionType; // 분수 세부 유형 (nullable)
+  final FractionType fractionType; // 분수 세부 유형
 
-  QuestionSettingsModel({
-    required this.problemType,
+  QuestionSettingModel({
+    required this.questionType,
     required this.questionCount,
-    this.arithmeticType,
-    this.digitCount,
-    this.fractionType,
+    required this.arithmeticType,
+    required this.digitCount,
+    required this.fractionType,
   });
+}
+
+extension QuestionSettingModelCopyWith on QuestionSettingModel {
+  QuestionSettingModel copyWith({
+    QuestionType? questionType,
+    QuestionCount? questionCount,
+    ArithmeticType? arithmeticType,
+    DigitCount? digitCount,
+    FractionType? fractionType,
+  }) {
+    return QuestionSettingModel(
+      questionType: questionType ?? this.questionType,
+      questionCount: questionCount ?? this.questionCount,
+      arithmeticType: arithmeticType ?? this.arithmeticType,
+      digitCount: digitCount ?? this.digitCount,
+      fractionType: fractionType ?? this.fractionType,
+    );
+  }
 }

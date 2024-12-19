@@ -1,15 +1,11 @@
-import 'package:hive/hive.dart';
-
-part 'constants.g.dart';
-
-@HiveType(typeId: 0)
-enum QuestionType {
-  @HiveField(0)
-  basic,
-  @HiveField(1)
-  fraction,
-  @HiveField(2)
-  alphabet,
-}
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 const String historyBoxKey = 'history';
+
+final QuestionSettingModel initialSetting = QuestionSettingModel(
+  questionType: QuestionType.arithmetic,
+  questionCount: QuestionCount.ten,
+  arithmeticType: ArithmeticType.addition,
+  fractionType: FractionType.fraction,
+  digitCount: DigitCount.one,
+);

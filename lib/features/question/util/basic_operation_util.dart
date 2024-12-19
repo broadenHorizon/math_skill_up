@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:math_skill_up/features/home/model/question_settings_model.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 /// DigitCount 타입을 정수로 변환합니다.
 int getDigitNumber(DigitCount digitCount) {
