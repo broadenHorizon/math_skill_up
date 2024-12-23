@@ -3,9 +3,9 @@ import 'package:math_skill_up/core/theme/app_colors.dart';
 
 class ExpandedMemoBox extends StatelessWidget {
   const ExpandedMemoBox(
-      {super.key, required this.height, required this.onExpandChanged});
+      {super.key, required this.isExpanded, required this.onExpandChanged});
 
-  final double height;
+  final bool isExpanded;
   final ValueChanged<bool> onExpandChanged;
 
   @override
@@ -13,15 +13,14 @@ class ExpandedMemoBox extends StatelessWidget {
     return Container(
       color: AppColors.white,
       width: double.infinity,
-      height: height,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           IconButton(
-            onPressed: () => onExpandChanged(height <= 100),
-            icon: Icon(height > 100 ? Icons.close : Icons.arrow_upward),
+            onPressed: () => onExpandChanged(!isExpanded),
+            icon: Icon(isExpanded ? Icons.close : Icons.arrow_upward),
           ),
-          if (height > 100)
+          if (isExpanded)
             Expanded(
               child: Column(
                 children: [

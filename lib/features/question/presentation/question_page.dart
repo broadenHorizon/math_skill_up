@@ -22,8 +22,8 @@ class _QuestionPageState extends State<QuestionPage>
     with SingleTickerProviderStateMixin {
   bool _isMemoExpanded = false;
   late AnimationController _controller;
-  late Animation<double> _questionBoxHeight;
-  late Animation<double> _memoBoxHeight;
+  late Animation<double> _questionBoxFlex;
+  late Animation<double> _memoBoxFlex;
 
   @override
   void initState() {
@@ -37,33 +37,17 @@ class _QuestionPageState extends State<QuestionPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final screenHeight = MediaQuery.of(context).size.height;
-    final safeAreaPadding = MediaQuery.of(context).padding;
-    final safeAreaHeight =
-        screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
-
-    final maxQuestionBoxHeight = safeAreaHeight -
-        appBarHeight -
-        paddingHeight -
-        keypadHeight -
-        minMemoBoxHeight;
-    final maxMemoBoxHeight = safeAreaHeight -
-        appBarHeight -
-        paddingHeight -
-        keypadHeight -
-        minQuestionBoxHeight;
-
-    _questionBoxHeight = Tween<double>(
-      begin: maxQuestionBoxHeight,
-      end: minQuestionBoxHeight,
+    _questionBoxFlex = Tween<double>(
+      begin: 4.0,
+      end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     ));
 
-    _memoBoxHeight = Tween<double>(
-      begin: minMemoBoxHeight,
-      end: maxMemoBoxHeight,
+    _memoBoxFlex = Tween<double>(
+      begin: 1.0,
+      end: 3.0,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -94,35 +78,39 @@ class _QuestionPageState extends State<QuestionPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const QuestionAppBar(height: appBarHeight),
+            const QuestionAppBar(),
             Expanded(
-                child: Column(
-              children: [
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) {
-                    return QuestionBox(
-                      target: int.parse(widget.id),
-                      height: _questionBoxHeight.value,
-                    );
-                  },
-                ),
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) {
-                    return ExpandedMemoBox(
-                      height: _memoBoxHeight.value,
-                      onExpandChanged: (isExpanded) =>
-                          _toggleMemoExpanded(isExpanded),
-                    );
-                  },
-                ),
-              ],
-            )),
-            const SizedBox(height: paddingHeight),
-            const KeypadBox(
-              height: keypadHeight,
+              child: Column(
+                children: [
+                  AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      return Expanded(
+                        flex: (_questionBoxFlex.value * 1000).toInt(),
+                        child: QuestionBox(
+                          target: int.parse(widget.id),
+                        ),
+                      );
+                    },
+                  ),
+                  AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      return Expanded(
+                        flex: (_memoBoxFlex.value * 1000).toInt(),
+                        child: ExpandedMemoBox(
+                          isExpanded: _isMemoExpanded,
+                          onExpandChanged: (isExpanded) =>
+                              _toggleMemoExpanded(isExpanded),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(height: 20),
+            const KeypadBox(),
           ],
         ),
       ),

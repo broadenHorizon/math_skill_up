@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 
 class QuestionAppBar extends ConsumerWidget {
-  const QuestionAppBar({super.key, required this.height});
-
-  final double height;
+  const QuestionAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: height,
+      height: 60,
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.gray200)),
           color: AppColors.white),

@@ -6,10 +6,9 @@ import 'package:math_skill_up/features/question/repository/questions_list_reposi
 import 'package:math_skill_up/features/question/util/basic_operation_util.dart';
 
 class QuestionBox extends ConsumerWidget {
-  const QuestionBox({super.key, required this.target, required this.height});
+  const QuestionBox({super.key, required this.target});
 
   final int target;
-  final double height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +31,6 @@ class QuestionBox extends ConsumerWidget {
           decoration: const BoxDecoration(
               border: Border(bottom: BorderSide(color: AppColors.gray200)),
               color: AppColors.white),
-          height: height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
