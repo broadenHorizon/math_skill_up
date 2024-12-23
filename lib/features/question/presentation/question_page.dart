@@ -99,7 +99,7 @@ class _QuestionPageState extends State<QuestionPage>
                       return Expanded(
                         flex: (_memoBoxFlex.value * 1000).toInt(),
                         child: ExpandedMemoBox(
-                          isExpanded: _isMemoExpanded,
+                          flexRatio: _memoBoxFlex.value,
                           onExpandChanged: (isExpanded) =>
                               _toggleMemoExpanded(isExpanded),
                         ),

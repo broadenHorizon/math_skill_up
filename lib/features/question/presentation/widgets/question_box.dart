@@ -31,54 +31,43 @@ class QuestionBox extends ConsumerWidget {
           decoration: const BoxDecoration(
               border: Border(bottom: BorderSide(color: AppColors.gray200)),
               color: AppColors.white),
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${questionList[target].firstNum}',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(width: 10), // Text 사이에 마진 추가
-                  Text(
-                    getDisplayOperatorWord(questionList[target].operator),
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(width: 10), // Text 사이에 마진 추가
-                  Text(
-                    '${questionList[target].secondNum}',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ],
+              Text(
+                '${questionList[target].firstNum}',
+                style: Theme.of(context).textTheme.displayLarge,
               ),
-              const SizedBox(height: 30), //
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '=',
-                    style: Theme.of(context).textTheme.displayMedium,
+              const SizedBox(width: 10), // Text 사이에 마진 추가
+              Text(
+                getDisplayOperatorWord(questionList[target].operator),
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(width: 10), // Text 사이에 마진 추가
+              Text(
+                '${questionList[target].secondNum}',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(width: 10), // Text 사이에 마진 추가
+              Text(
+                '=',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+              const SizedBox(width: 10), // = 기호와 TextField 사이 간격
+              Container(
+                width: 120, // TextField 넓이
+                decoration: BoxDecoration(
+                  border: Border.all(color: borderColor),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextField(
+                  focusNode: focusNode, // FocusNode 추가
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintStyle: TextStyle(color: AppColors.gray300),
+                    contentPadding: EdgeInsets.all(10),
                   ),
-                  const SizedBox(width: 10), // = 기호와 TextField 사이 간격
-                  Container(
-                    width: 200, // TextField 넓이
-                    decoration: BoxDecoration(
-                      border: Border.all(color: borderColor),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextField(
-                      focusNode: focusNode, // FocusNode 추가
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Enter your answer',
-                        hintStyle: TextStyle(color: AppColors.gray300),
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ));

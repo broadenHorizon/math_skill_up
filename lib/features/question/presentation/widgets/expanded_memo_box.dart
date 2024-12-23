@@ -3,13 +3,15 @@ import 'package:math_skill_up/core/theme/app_colors.dart';
 
 class ExpandedMemoBox extends StatelessWidget {
   const ExpandedMemoBox(
-      {super.key, required this.isExpanded, required this.onExpandChanged});
+      {super.key, required this.flexRatio, required this.onExpandChanged});
 
-  final bool isExpanded;
+  final double flexRatio;
   final ValueChanged<bool> onExpandChanged;
 
   @override
   Widget build(BuildContext context) {
+    bool isExpanded = flexRatio > 2.5;
+
     return Container(
       color: AppColors.white,
       width: double.infinity,
