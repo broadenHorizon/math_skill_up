@@ -13,7 +13,7 @@ part 'router.g.dart';
 @riverpod
 GoRouter router(Ref ref) {
   final router = GoRouter(
-    initialLocation: '/', //TODO: 임시로 변경, home으로 변경되어야함
+    initialLocation: '/history', //TODO: 임시로 변경, home으로 변경되어야함
     routes: [
       GoRoute(
         path: '/',
@@ -25,7 +25,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/history',
-        builder: (_, __) => const HistoryPage(),
+        builder: (_, __) => const HistoryScreen(),
       ),
       GoRoute(
         path: '/question-setting',
