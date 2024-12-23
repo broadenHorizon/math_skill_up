@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/expanded_memo_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_app_bar.dart';
-import 'package:math_skill_up/features/question/presentation/widgets/question_box.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/question_box/question_box.dart';
 
 const appBarHeight = 60.0;
 const paddingHeight = 20.0;
