@@ -48,16 +48,15 @@ class HomeService {
   }
 
   QuestionSettingModel getSettingsData() {
-    // 테스트용으로 잠시 주석 처리 => 추후 원복 필요
     final asyncSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
 
-    // if (asyncSettings.hasValue) {
-    //   final settings = asyncSettings.value!;
-    //   return settings;
-    // }
+    if (asyncSettings.hasValue) {
+      final settings = asyncSettings.value!;
+      return settings;
+    }
 
     return QuestionSettingModel(
-        questionType: QuestionType.alphabet, // 사칙연산
+        questionType: QuestionType.arithmetic, // 사칙연산
         questionCount: QuestionCount.ten, // 10문항
         arithmeticType: ArithmeticType.addition, // 덧셈
         digitCount: DigitCount.one, // 10자리
