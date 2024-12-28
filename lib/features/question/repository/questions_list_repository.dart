@@ -8,18 +8,16 @@ part 'questions_list_repository.g.dart';
 
 @riverpod
 class QuestionsListRepository extends _$QuestionsListRepository {
-  late List<Question> _cachedQuestionsList;
+  List<Question> questionsList = [];
 
   @override
   List<Question> build() {
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
 
-    _cachedQuestionsList = _createQuestions(settings);
-    return _cachedQuestionsList;
+    questionsList = _createQuestions(settings);
+    return questionsList;
   }
-
-  List<Question> get questionsList => _cachedQuestionsList;
 
   List<Question> _createQuestions(QuestionSettingModel settings) {
     switch (settings.questionType) {

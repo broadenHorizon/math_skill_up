@@ -66,32 +66,33 @@ List<AlphabetOperationQuestion> createAlphabetQuestions(
     final int firstAlphabetIndex =
         generateRandomInt(minNum: 0, maxNum: alphabet.length - 1);
     final ArithmeticType operator = generateRandomOperator();
-    final int secondNumber = generateRandomInt(
-        minNum: firstAlphabetIndex - 5, maxNum: firstAlphabetIndex + 5);
+    final int secondNumber = generateRandomInt(minNum: 1, maxNum: 5);
 
     int resultAlphabetIndex = firstAlphabetIndex + secondNumber;
+    if (operator == ArithmeticType.subtraction) {
+      resultAlphabetIndex = firstAlphabetIndex - secondNumber;
+    }
     if (resultAlphabetIndex < 0) {
       resultAlphabetIndex += alphabet.length;
     }
     resultAlphabetIndex = resultAlphabetIndex % alphabet.length;
-    final List tmp = [
+    final List<String> operationList = [
       alphabet[firstAlphabetIndex],
-      secondNumber,
+      operator == ArithmeticType.subtraction
+          ? "-$secondNumber"
+          : secondNumber.toString(),
       alphabet[resultAlphabetIndex]
     ];
 
     int blankPositon = generateRandomInt(minNum: 0, maxNum: 2);
-    questions.add(
-      AlphabetOperationQuestion(
-        id: i + 1,
-        firstAlphabet: blankPositon == 0 ? null : alphabet[firstAlphabetIndex],
-        operator: blankPositon == 1 ? ArithmeticType.addition : operator,
-        secondNumber: blankPositon == 1 ? null : secondNumber,
-        resultAlphabet:
-            blankPositon == 2 ? null : alphabet[resultAlphabetIndex],
-        answer: tmp[blankPositon],
-      ),
-    );
+    questions.add(AlphabetOperationQuestion(
+      id: i + 1,
+      firstAlphabet: blankPositon == 0 ? null : alphabet[firstAlphabetIndex],
+      operator: blankPositon == 1 ? ArithmeticType.addition : operator,
+      secondNumber: blankPositon == 1 ? null : secondNumber,
+      resultAlphabet: blankPositon == 2 ? null : alphabet[resultAlphabetIndex],
+      answer: operationList[blankPositon],
+    ));
   }
 
   return questions;
