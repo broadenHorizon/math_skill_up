@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:math_skill_up/core/components/expanded_text_botton.dart';
 import 'package:math_skill_up/core/components/sliding_toggle_button.dart';
 import 'package:math_skill_up/features/history/provider/history_providers.dart';
+import 'package:math_skill_up/features/history/service/history_service.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 class HistoryScreen extends ConsumerWidget {
@@ -11,6 +12,10 @@ class HistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // HistoryService를 통해 필터링된 히스토리 가져오기
+    final historyService = ref.read(historyServiceProvider);
+    final histories = historyService.getFilteredHistories();
+
     final historySetting = ref.watch(historySettingProvider);
 
     return Scaffold(
@@ -56,16 +61,51 @@ class HistoryScreen extends ConsumerWidget {
                       .setFractionType(selectedOption);
                 },
               ),
+            const SizedBox(height: 16),
+            // 히스토리 데이터 표시
+            Expanded(
+              child: histories.isEmpty
+                  ? Center(
+                      child: Text(
+                        '히스토리가 없습니다.',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: histories.length,
+                      itemBuilder: (context, index) {
+                        final history = histories[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            title: Text(
+                              history.formattedDate,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('정확도: ${history.formattedAccuracy}'),
+                                Text('소요 시간: ${history.formattedElapsedTime}'),
+                                Text(history.questionType.displayName),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(30.0),
         child: ExpandedTextBotton(
-            onPressed: () {
-              context.pop();
-            },
-            text: '뒤로 가기'),
+          onPressed: () {
+            context.pop();
+          },
+          text: '뒤로 가기',
+        ),
       ),
     );
   }
