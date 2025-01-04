@@ -21,7 +21,7 @@ class HistoryService {
 
   List<History> getFilteredHistories() {
     final historySetting = ref.watch(historySettingProvider);
-    final historyRepository = ref.read(historyRepositoryProvider);
+    final historyRepository = ref.read(historyRepositoryProvider).value!;
 
     switch (historySetting.questionType) {
       case QuestionType.arithmetic:

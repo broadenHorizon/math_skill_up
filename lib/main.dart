@@ -5,6 +5,8 @@ import 'package:math_skill_up/core/components/loading_indicator.dart';
 import 'package:math_skill_up/core/theme/constants.dart';
 import 'package:math_skill_up/core/theme/app_theme_data.dart';
 import 'package:math_skill_up/core/theme/app_theme_notifier.dart';
+import 'package:math_skill_up/features/history/repository/history_repository.dart';
+import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
 import 'package:math_skill_up/features/question_setting/repository/hive_question_setting_repository.dart';
 
 import 'services/router.dart';
@@ -27,7 +29,11 @@ class App extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     AsyncValue<String> theme = ref.watch(appThemeNotifierProvider);
     final questionSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
-    if (theme.isLoading || questionSettings.isLoading) {
+    AsyncValue<HistoryRepository> historyRepository =
+        ref.watch(historyRepositoryProvider);
+    if (theme.isLoading ||
+        questionSettings.isLoading ||
+        historyRepository.isLoading) {
       return const Center(child: LoadingIndicator());
     }
     return MaterialApp.router(
