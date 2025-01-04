@@ -1,9 +1,19 @@
 import 'package:math_skill_up/features/history/model/history_model.dart';
 
 abstract class HistoryRepository {
-  Future<List<History>> build();
+  List<History> getAdditionHistory();
+  List<History> getSubtractionHistory();
+  List<History> getMultiplicationHistory();
+  List<History> getDivisionHistory();
+  List<History> getFractionHistory();
+  List<History> getPercentHistory();
+  List<History> getAlphabetHistory();
 
-  void addHistory(History history);
-
-  // TODO: add more functions here
+  void addAdditionHistory(History history);
+  void addSubtractionHistory(History history);
+  void addMultiplicationHistory(History history);
+  void addDivisionHistory(History history);
+  void addFractionHistory(History history);
+  void addPercentHistory(History history);
+  void addAlphabetHistory(History history);
 }
