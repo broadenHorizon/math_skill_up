@@ -13,12 +13,18 @@ class History {
   final int elapsedTime; // 걸린 시간 (milliseconds)
   @HiveField(3)
   final double accuracy; // 정답률 (0.00 ~ 1.00)
+  @HiveField(4)
+  final ArithmeticType arithmeticType;
+  @HiveField(5)
+  final FractionType fractionType;
 
   History({
     required this.date,
     required this.questionType,
     required this.elapsedTime,
     required this.accuracy,
+    required this.arithmeticType,
+    required this.fractionType,
   });
 
   // accuracy을 0.00%로 반환하는 메서드

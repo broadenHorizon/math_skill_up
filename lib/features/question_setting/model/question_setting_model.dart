@@ -78,7 +78,7 @@ enum FractionType {
   @HiveField(0)
   fraction('분수'), // 분수
   @HiveField(1)
-  percent('퍼센스'); // 퍼센트
+  percent('퍼센트'); // 퍼센트
 
   final String displayName;
 

@@ -1,130 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_skill_up/features/history/model/history_model.dart';
-import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:math_skill_up/core/components/sliding_toggle_button.dart';
+import 'package:math_skill_up/features/history/provider/history_providers.dart';
+import 'package:math_skill_up/features/history/service/history_service.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
-// TODO: 임시로 history 저장 및 조회 로직을 넣었고, 차후 수정 예정
-
-class HistoryPage extends ConsumerStatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+class HistoryScreen extends ConsumerWidget {
+  const HistoryScreen({super.key});
 
   @override
-  ConsumerState<HistoryPage> createState() => _HistoryPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // HistoryService를 통해 필터링된 히스토리 가져오기
+    final historyService = ref.read(historyServiceProvider);
+    final histories = historyService.getFilteredHistories();
 
-class _HistoryPageState extends ConsumerState<HistoryPage> {
-  late final TextEditingController _elapsedTimeController;
-  late final TextEditingController _accuracyController;
-
-  @override
-  void initState() {
-    super.initState();
-    _elapsedTimeController = TextEditingController();
-    _accuracyController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _elapsedTimeController.dispose();
-    _accuracyController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final historyRepository = ref.watch(hiveHistoryRepositoryProvider.notifier);
+    final historySetting = ref.watch(historySettingProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History Page'),
+        title: Text('히스토리', style: Theme.of(context).textTheme.displayLarge),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.pop(); // GoRouter의 pop 메서드
+          },
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(
+            top: 8.0, bottom: 16.0, left: 16.0, right: 16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextField(
-              controller: _elapsedTimeController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Elapsed Time (milliseconds)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _accuracyController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Accuracy (0.00 - 1.00)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () async {
-                // 입력값으로 새로운 History 저장
-                final elapsedTime =
-                    int.tryParse(_elapsedTimeController.text) ?? 0;
-                final accuracy =
-                    double.tryParse(_accuracyController.text) ?? 0.0;
-
-                final newHistory = History(
-                  date: DateTime.now(),
-                  questionType: QuestionType.arithmetic, // 기본 문제 유형으로 고정
-                  elapsedTime: elapsedTime,
-                  accuracy: accuracy,
-                );
-
-                await historyRepository.addHistory(newHistory);
-
-                // 입력 필드 초기화
-                _elapsedTimeController.clear();
-                _accuracyController.clear();
-
-                // 화면 갱신
-                setState(() {});
+            SlidingToggleButton<QuestionType>(
+              title: "유형",
+              value: historySetting.questionType,
+              values: QuestionType.values,
+              onOptionSelected: (selectedOption) {
+                ref
+                    .read(historySettingProvider.notifier)
+                    .setQuestionType(selectedOption);
               },
-              child: const Text('Add History'),
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'History List',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: FutureBuilder<List<History>>(
-                future: historyRepository.build(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  }
-
-                  final histories = snapshot.data ?? [];
-
-                  if (histories.isEmpty) {
-                    return const Center(child: Text('No history found.'));
-                  }
-
-                  return ListView.builder(
-                    itemCount: histories.length,
-                    itemBuilder: (context, index) {
-                      final history = histories[index];
-                      return ListTile(
-                        title: Text("Date: ${history.formattedDate}"),
-                        subtitle: Text(
-                            "Accuracy: ${history.formattedAccuracy}, Time: ${history.formattedElapsedTime}"),
-                      );
-                    },
-                  );
+            // 선택된 유형에 따라 세부 설정 UI 표시
+            if (historySetting.questionType == QuestionType.arithmetic)
+              SlidingToggleButton<ArithmeticType>(
+                title: "문제 유형",
+                value: historySetting.arithmeticType,
+                values: ArithmeticType.values,
+                onOptionSelected: (selectedOption) {
+                  ref
+                      .read(historySettingProvider.notifier)
+                      .setArithmeticType(selectedOption);
+                },
+              )
+            else if (historySetting.questionType == QuestionType.fraction)
+              SlidingToggleButton<FractionType>(
+                title: "문제 유형",
+                value: historySetting.fractionType,
+                values: FractionType.values,
+                onOptionSelected: (selectedOption) {
+                  ref
+                      .read(historySettingProvider.notifier)
+                      .setFractionType(selectedOption);
                 },
               ),
+            const SizedBox(height: 16),
+            // 히스토리 데이터 표시
+            Expanded(
+              child: histories.isEmpty
+                  ? Center(
+                      child: Text(
+                        '히스토리가 없습니다.',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: histories.length,
+                      itemBuilder: (context, index) {
+                        final history = histories[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            title: Text(
+                              history.formattedDate,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('정확도: ${history.formattedAccuracy}'),
+                                Text('소요 시간: ${history.formattedElapsedTime}'),
+                                Text(history.questionType.displayName),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
