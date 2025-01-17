@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_box.dart';
-import 'package:math_skill_up/features/question/presentation/widgets/expanded_memo_box.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/memo_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_app_bar.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_box/question_box.dart';
 
@@ -38,7 +38,7 @@ class _QuestionPageState extends State<QuestionPage>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _questionBoxFlex = Tween<double>(
-      begin: 4.0,
+      begin: 5.0,
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -98,7 +98,7 @@ class _QuestionPageState extends State<QuestionPage>
                     builder: (context, child) {
                       return Expanded(
                         flex: (_memoBoxFlex.value * 1000).toInt(),
-                        child: ExpandedMemoBox(
+                        child: MemoBox(
                           flexRatio: _memoBoxFlex.value,
                           onExpandChanged: (isExpanded) =>
                               _toggleMemoExpanded(isExpanded),
