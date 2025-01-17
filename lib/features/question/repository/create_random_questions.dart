@@ -2,6 +2,7 @@ import 'package:math_skill_up/features/question/constant/alphabet.dart';
 import 'package:math_skill_up/features/question/model/quiestion_model.dart';
 import 'package:math_skill_up/features/question/util/alphabet_operation_util.dart';
 import 'package:math_skill_up/features/question/util/basic_operation_util.dart';
+import 'package:math_skill_up/features/question/util/common_util.dart';
 import 'package:math_skill_up/features/question/util/fraction_operation_util.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
@@ -9,12 +10,12 @@ import 'package:math_skill_up/features/question_setting/model/question_setting_m
 List<BasicOperationQuestion> createBasicQuestions(
     QuestionSettingModel settings) {
   final List<BasicOperationQuestion> questions = [];
-  final int firstNum =
-      generateRandomInt(digit: getDigitNumber(settings.digitCount));
-  final int secondNum =
-      generateRandomInt(digit: getDigitNumber(settings.digitCount));
 
-  for (int i = 0; i < settings.questionCount.index + 1; i++) {
+  for (int i = 0; i < convertQuestionCountToInt(settings.questionCount); i++) {
+    final int firstNum =
+        generateRandomInt(digit: getDigitNumber(settings.digitCount));
+    final int secondNum =
+        generateRandomInt(digit: getDigitNumber(settings.digitCount));
     questions.add(BasicOperationQuestion(
         id: i + 1,
         firstNum: firstNum,
@@ -31,7 +32,7 @@ List<FractionOperationQuestion> createFractionQuestions(
     QuestionSettingModel settings) {
   final List<FractionOperationQuestion> questions = [];
 
-  for (int i = 0; i < settings.questionCount.index + 1; i++) {
+  for (int i = 0; i < convertQuestionCountToInt(settings.questionCount); i++) {
     int denominatorDigit = generateRandomInt(minNum: 3, maxNum: 4);
     int numeratorDigit = generateRandomInt(minNum: 3, maxNum: 4);
     Fraction firstFraction = generateRandomFraction(
@@ -62,7 +63,7 @@ List<AlphabetOperationQuestion> createAlphabetQuestions(
     QuestionSettingModel settings) {
   final List<AlphabetOperationQuestion> questions = [];
 
-  for (int i = 0; i < settings.questionCount.index + 1; i++) {
+  for (int i = 0; i < convertQuestionCountToInt(settings.questionCount); i++) {
     final int firstAlphabetIndex =
         generateRandomInt(minNum: 0, maxNum: alphabet.length - 1);
     final ArithmeticType operator = generateRandomOperator();

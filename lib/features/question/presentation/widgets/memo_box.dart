@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
+import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/util/common_util.dart';
 
-class MemoBox extends StatefulWidget {
+class MemoBox extends ConsumerStatefulWidget {
   const MemoBox(
-      {super.key, required this.flexRatio, required this.onExpandChanged});
+      {super.key,
+      required this.flexRatio,
+      required this.target,
+      required this.onExpandChanged});
 
   final double flexRatio;
+  final int target;
   final ValueChanged<bool> onExpandChanged;
 
   @override
   MemoBoxState createState() => MemoBoxState();
 }
 
-class MemoBoxState extends State<MemoBox> {
+class MemoBoxState extends ConsumerState<MemoBox> {
   late FocusNode _focusNode;
   bool _isExpanded = false;
 
@@ -34,6 +42,17 @@ class MemoBoxState extends State<MemoBox> {
   @override
   Widget build(BuildContext context) {
     _isExpanded = widget.flexRatio > 1.5;
+    final homeService = ref.read(homeServiceProvider);
+    final settings = homeService.getSettingsData();
+
+    void submitHandler() {
+      if (convertQuestionCountToInt(settings.questionCount) <=
+          widget.target + 1) {
+        context.push('/result');
+      } else {
+        context.go('/question?id=${widget.target + 1}');
+      }
+    }
 
     return Container(
       color: AppColors.white,
@@ -60,7 +79,7 @@ class MemoBoxState extends State<MemoBox> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: submitHandler,
                         icon: const Icon(
                           Icons.check_circle,
                           color: AppColors.primary,
@@ -87,7 +106,7 @@ class MemoBoxState extends State<MemoBox> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: submitHandler,
                 style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary),
                 child: Text(
