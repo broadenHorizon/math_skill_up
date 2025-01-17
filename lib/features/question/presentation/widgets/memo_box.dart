@@ -33,46 +33,72 @@ class MemoBoxState extends State<MemoBox> {
 
   @override
   Widget build(BuildContext context) {
-    _isExpanded = widget.flexRatio > 2.5;
+    _isExpanded = widget.flexRatio > 1.5;
 
     return Container(
       color: AppColors.white,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: () => widget.onExpandChanged(!_isExpanded),
-            icon:
-                Icon(_isExpanded ? Icons.arrow_drop_down : Icons.arrow_drop_up),
-            iconSize: 36,
+          SizedBox(
+            height: 30,
+            child: Stack(
+              children: [
+                Center(
+                  child: IconButton(
+                    onPressed: () => widget.onExpandChanged(!_isExpanded),
+                    icon: Icon(_isExpanded
+                        ? Icons.arrow_drop_down
+                        : Icons.arrow_drop_up),
+                    iconSize: 36,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
+                if (!_isExpanded)
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.check_circle,
+                          color: AppColors.primary,
+                        ),
+                        iconSize: 30,
+                      )),
+              ],
+            ),
           ),
           if (_isExpanded)
             Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      focusNode: _focusNode,
-                      decoration: const InputDecoration(
-                        hintText: 'Write here...',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: null,
-                      readOnly: true,
-                      showCursor: _focusNode.hasFocus,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('SUBMIT'),
-                    ),
-                  ),
-                ],
+              child: TextField(
+                focusNode: _focusNode,
+                decoration: InputDecoration(
+                  hintText: _focusNode.hasFocus ? '' : 'Write here...',
+                  border: InputBorder.none,
+                ),
+                maxLines: null,
+                readOnly: true,
+                showCursor: _focusNode.hasFocus,
               ),
             ),
+          if (_isExpanded)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary),
+                child: Text(
+                  'SUBMIT',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: AppColors.offWhite, // 텍스트 색상 변경
+                      ),
+                ),
+              ),
+            ),
+          SizedBox(height: 6),
         ],
       ),
     );

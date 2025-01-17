@@ -38,7 +38,7 @@ class _QuestionPageState extends State<QuestionPage>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _questionBoxFlex = Tween<double>(
-      begin: 5.0,
+      begin: 6.0,
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
