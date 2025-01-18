@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:math_skill_up/core/components/sliding_toggle_button.dart';
+import 'package:math_skill_up/features/history/presentation/history_chart.dart';
 import 'package:math_skill_up/features/history/provider/history_providers.dart';
 import 'package:math_skill_up/features/history/service/history_service.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
@@ -76,29 +77,7 @@ class HistoryScreen extends ConsumerWidget {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: histories.length,
-                      itemBuilder: (context, index) {
-                        final history = histories[index];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            title: Text(
-                              history.formattedDate,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('정확도: ${history.formattedAccuracy}'),
-                                Text('소요 시간: ${history.formattedElapsedTime}'),
-                                Text(history.questionType.displayName),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                  : HistoryChart(histories: histories),
             ),
           ],
         ),
