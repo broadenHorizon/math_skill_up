@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/repository/timer_repository.dart';
 import 'package:math_skill_up/features/question/util/common_util.dart';
 
 class MemoBox extends ConsumerStatefulWidget {
@@ -46,6 +47,9 @@ class MemoBoxState extends ConsumerState<MemoBox> {
     final settings = homeService.getSettingsData();
 
     void submitHandler() {
+      final timeTaken = ref.read(timerRepositoryProvider.notifier).stopTimer();
+
+      print('Time taken: $timeTaken ms');
       if (convertQuestionCountToInt(settings.questionCount) <=
           widget.target + 1) {
         context.push('/result');
