@@ -6,7 +6,7 @@ import 'package:math_skill_up/features/question/presentation/widgets/question_bo
 import 'package:math_skill_up/features/question/presentation/widgets/question_box/basic_question_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_box/fraction_question_box.dart';
 import 'package:math_skill_up/features/question/repository/questions_list_repository.dart';
-import 'package:math_skill_up/features/question/repository/result_repository.dart';
+import 'package:math_skill_up/features/question/repository/current_question_repository.dart';
 
 class QuestionBox extends ConsumerWidget {
   const QuestionBox({super.key, required this.target});
@@ -17,7 +17,8 @@ class QuestionBox extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final questionList =
         ref.watch(questionsListRepositoryProvider.notifier).questionsList;
-    final resultRepository = ref.read(resultRepositoryProvider.notifier);
+    final currentQuestion =
+        ref.read(currentQuestionRepositoryProvider.notifier);
 
     Widget buildContainer(Widget child) {
       return Container(
@@ -29,17 +30,14 @@ class QuestionBox extends ConsumerWidget {
       );
     }
 
-    if (questionList is List<BasicOperationQuestion>) {
-      final question = questionList[target];
-      resultRepository.addQuestion(question);
+    final question = questionList[target];
+    currentQuestion.setQuestion(question);
+
+    if (question is BasicOperationQuestion) {
       return buildContainer(BasicQuestionBox(question: question));
-    } else if (questionList is List<FractionOperationQuestion>) {
-      final question = questionList[target];
-      resultRepository.addQuestion(question);
+    } else if (question is FractionOperationQuestion) {
       return buildContainer(FractionQuestionBox(question: question));
-    } else if (questionList is List<AlphabetOperationQuestion>) {
-      final question = questionList[target];
-      resultRepository.addQuestion(question);
+    } else if (question is AlphabetOperationQuestion) {
       return buildContainer(AlphabetQuestionBox(question: question));
     } else {
       return buildContainer(SizedBox(

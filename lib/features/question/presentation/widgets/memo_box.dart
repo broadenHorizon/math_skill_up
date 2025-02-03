@@ -3,8 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/repository/current_question_repository.dart';
 import 'package:math_skill_up/features/question/repository/timer_repository.dart';
+import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 import 'package:math_skill_up/features/question/util/common_util.dart';
+import 'package:math_skill_up/features/result/repository/result_list_repository.dart';
 
 class MemoBox extends ConsumerStatefulWidget {
   const MemoBox(
@@ -45,11 +48,17 @@ class MemoBoxState extends ConsumerState<MemoBox> {
     _isExpanded = widget.flexRatio > 1.5;
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
+    final resultListRepository =
+        ref.read(resultListRepositoryProvider.notifier);
+    final currentQuestion =
+        ref.read(currentQuestionRepositoryProvider.notifier);
+    final userAnswer = ref.read(userAnswerRepositoryProvider.notifier);
 
     void submitHandler() {
       final timeTaken = ref.read(timerRepositoryProvider.notifier).stopTimer();
 
-      print('Time taken: $timeTaken ms');
+      resultListRepository.addResult(
+          currentQuestion.getQuestion(), timeTaken, userAnswer.getUserAnswer());
       if (convertQuestionCountToInt(settings.questionCount) <=
           widget.target + 1) {
         context.push('/result');

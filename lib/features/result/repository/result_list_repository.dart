@@ -10,7 +10,8 @@ class ResultListRepository extends _$ResultListRepository {
 
   @override
   List<Result> build() {
-    return [];
+    resultList = [];
+    return resultList;
   }
 
   /// 결과 추가
