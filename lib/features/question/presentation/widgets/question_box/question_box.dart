@@ -6,6 +6,7 @@ import 'package:math_skill_up/features/question/presentation/widgets/question_bo
 import 'package:math_skill_up/features/question/presentation/widgets/question_box/basic_question_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/question_box/fraction_question_box.dart';
 import 'package:math_skill_up/features/question/repository/questions_list_repository.dart';
+import 'package:math_skill_up/features/question/repository/result_repository.dart';
 
 class QuestionBox extends ConsumerWidget {
   const QuestionBox({super.key, required this.target});
@@ -16,6 +17,7 @@ class QuestionBox extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final questionList =
         ref.watch(questionsListRepositoryProvider.notifier).questionsList;
+    final resultRepository = ref.read(resultRepositoryProvider.notifier);
 
     Widget buildContainer(Widget child) {
       return Container(
@@ -28,13 +30,17 @@ class QuestionBox extends ConsumerWidget {
     }
 
     if (questionList is List<BasicOperationQuestion>) {
-      return buildContainer(BasicQuestionBox(question: questionList[target]));
+      final question = questionList[target];
+      resultRepository.addQuestion(question);
+      return buildContainer(BasicQuestionBox(question: question));
     } else if (questionList is List<FractionOperationQuestion>) {
-      return buildContainer(
-          FractionQuestionBox(question: questionList[target]));
+      final question = questionList[target];
+      resultRepository.addQuestion(question);
+      return buildContainer(FractionQuestionBox(question: question));
     } else if (questionList is List<AlphabetOperationQuestion>) {
-      return buildContainer(
-          AlphabetQuestionBox(question: questionList[target]));
+      final question = questionList[target];
+      resultRepository.addQuestion(question);
+      return buildContainer(AlphabetQuestionBox(question: question));
     } else {
       return buildContainer(SizedBox(
           child: Text(

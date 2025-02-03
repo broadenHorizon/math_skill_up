@@ -78,7 +78,9 @@ class _QuestionPageState extends State<QuestionPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const QuestionAppBar(),
+            QuestionAppBar(
+              target: int.parse(widget.id) + 1,
+            ),
             Expanded(
               child: Column(
                 children: [

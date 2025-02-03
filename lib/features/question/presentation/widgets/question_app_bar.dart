@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
+import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/util/common_util.dart';
 
 class QuestionAppBar extends ConsumerWidget {
-  const QuestionAppBar({super.key});
+  const QuestionAppBar({super.key, required this.target});
+
+  final int target;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final homeService = ref.read(homeServiceProvider);
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -26,7 +31,7 @@ class QuestionAppBar extends ConsumerWidget {
           ),
           Center(
             child: Text(
-              "3/10",
+              "$target/${convertQuestionCountToInt(homeService.getSettingsData().questionCount)}",
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
