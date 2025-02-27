@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_header.dart';
+import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 
 class KeypadBox extends ConsumerWidget {
   const KeypadBox({super.key});
@@ -20,7 +21,7 @@ class KeypadBox extends ConsumerWidget {
       '3',
       '.',
       '0',
-      '⌫'
+      'delete'
     ];
     return Container(
       height: 340,
@@ -38,9 +39,17 @@ class KeypadBox extends ConsumerWidget {
               ),
               itemCount: buttons.length,
               itemBuilder: (context, index) {
+                final userAnswer =
+                    ref.read(userAnswerRepositoryProvider.notifier);
                 return ElevatedButton(
                   onPressed: () {
-                    // 버튼 클릭 시 동작 추가
+                    String prevAnswer = userAnswer.getUserAnswer();
+                    if (buttons[index] == 'delete') {
+                      userAnswer.setUserAnswer(
+                          prevAnswer.substring(0, prevAnswer.length - 1));
+                      return;
+                    }
+                    userAnswer.setUserAnswer(prevAnswer + buttons[index]);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -50,7 +59,7 @@ class KeypadBox extends ConsumerWidget {
                     foregroundColor: Colors.black,
                   ),
                   child: Text(
-                    buttons[index],
+                    buttons[index] == 'delete' ? '⌫' : buttons[index],
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                 );
