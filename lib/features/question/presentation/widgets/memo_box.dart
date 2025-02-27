@@ -62,12 +62,15 @@ class MemoBoxState extends ConsumerState<MemoBox> {
     final currentQuestion =
         ref.read(currentQuestionRepositoryProvider.notifier);
     final userAnswer = ref.read(userAnswerRepositoryProvider.notifier);
+    final memoText = ref.read(memoRepositoryProvider.notifier);
 
     void submitHandler() {
       final timeTaken = ref.read(timerRepositoryProvider.notifier).stopTimer();
 
       resultListRepository.addResult(
           currentQuestion.getQuestion(), timeTaken, userAnswer.getUserAnswer());
+      userAnswer.setUserAnswer('');
+      memoText.setMemo('');
       if (convertQuestionCountToInt(settings.questionCount) <=
           widget.target + 1) {
         context.go('/result');
