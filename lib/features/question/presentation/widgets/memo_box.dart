@@ -61,7 +61,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
           currentQuestion.getQuestion(), timeTaken, userAnswer.getUserAnswer());
       if (convertQuestionCountToInt(settings.questionCount) <=
           widget.target + 1) {
-        context.push('/result');
+        context.go('/result');
       } else {
         context.go('/question?id=${widget.target + 1}');
       }
