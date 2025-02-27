@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_header.dart';
+import 'package:math_skill_up/features/question/repository/current_focus_repository.dart';
+import 'package:math_skill_up/features/question/repository/memo_repository.dart';
 import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 
 class KeypadBox extends ConsumerWidget {
@@ -9,6 +11,7 @@ class KeypadBox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String? currentFocus = ref.watch(currentFocusRepositoryProvider);
     final buttons = [
       '7',
       '8',
@@ -41,15 +44,26 @@ class KeypadBox extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final userAnswer =
                     ref.read(userAnswerRepositoryProvider.notifier);
+                final memo = ref.read(memoRepositoryProvider.notifier);
                 return ElevatedButton(
                   onPressed: () {
-                    String prevAnswer = userAnswer.getUserAnswer();
-                    if (buttons[index] == 'delete') {
-                      userAnswer.setUserAnswer(
-                          prevAnswer.substring(0, prevAnswer.length - 1));
-                      return;
+                    if (currentFocus == 'answer') {
+                      String prevAnswer = userAnswer.getUserAnswer();
+                      if (buttons[index] == 'delete') {
+                        userAnswer.setUserAnswer(
+                            prevAnswer.substring(0, prevAnswer.length - 1));
+                        return;
+                      }
+                      userAnswer.setUserAnswer(prevAnswer + buttons[index]);
+                    } else if (currentFocus == 'memo') {
+                      String prevMemo = memo.getMemo();
+                      if (buttons[index] == 'delete') {
+                        memo.setMemo(
+                            prevMemo.substring(0, prevMemo.length - 1));
+                        return;
+                      }
+                      memo.setMemo(prevMemo + buttons[index]);
                     }
-                    userAnswer.setUserAnswer(prevAnswer + buttons[index]);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

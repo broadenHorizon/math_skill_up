@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
+import 'package:math_skill_up/features/question/repository/current_focus_repository.dart';
 import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 
 class BlankBox extends ConsumerStatefulWidget {
@@ -14,7 +15,7 @@ class BlankBox extends ConsumerStatefulWidget {
 
 class BlankBoxState extends ConsumerState<BlankBox> {
   late FocusNode _focusNode;
-  late TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller = TextEditingController();
   Color _borderColor = AppColors.gray300;
 
   @override
@@ -26,6 +27,9 @@ class BlankBoxState extends ConsumerState<BlankBox> {
         _borderColor =
             _focusNode.hasFocus ? AppColors.gray400 : AppColors.gray300;
       });
+      if (_focusNode.hasFocus) {
+        ref.read(currentFocusRepositoryProvider.notifier).setFocus("answer");
+      }
     });
   }
 
@@ -39,6 +43,7 @@ class BlankBoxState extends ConsumerState<BlankBox> {
   Widget build(BuildContext context) {
     final userAnswer = ref.watch(userAnswerRepositoryProvider);
     _controller.text = userAnswer;
+
     return Container(
       width: widget.width, // TextField 넓이
       height: 50,
