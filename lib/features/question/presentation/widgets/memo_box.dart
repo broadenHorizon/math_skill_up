@@ -27,6 +27,7 @@ class MemoBox extends ConsumerStatefulWidget {
 class MemoBoxState extends ConsumerState<MemoBox> {
   late FocusNode _focusNode;
   bool _isExpanded = false;
+  bool _isSmallSubmitButton = true;
 
   @override
   void initState() {
@@ -46,6 +47,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
   @override
   Widget build(BuildContext context) {
     _isExpanded = widget.flexRatio > 1.5;
+    _isSmallSubmitButton = widget.flexRatio < 1.8;
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
     final resultListRepository =
@@ -88,7 +90,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
-                if (!_isExpanded)
+                if (_isSmallSubmitButton)
                   Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
@@ -115,7 +117,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
                 showCursor: _focusNode.hasFocus,
               ),
             ),
-          if (_isExpanded)
+          if (!_isSmallSubmitButton)
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
