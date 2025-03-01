@@ -49,6 +49,6 @@ class HistorySetting extends _$HistorySetting {
 
   // Setter for fractionType
   void setFractionType(FractionType? newFractionType) {
-    state.copyWith(fractionType: newFractionType);
+    state = state.copyWith(fractionType: newFractionType);
   }
 }

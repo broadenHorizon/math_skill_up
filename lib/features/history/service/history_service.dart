@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'history_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 HistoryService historyService(Ref ref) {
   return HistoryService(ref: ref);
 }
@@ -20,6 +20,7 @@ class HistoryService {
   });
 
   List<History> getFilteredHistories() {
+    print("getFilteredHistories 호출");
     final historySetting = ref.watch(historySettingProvider);
     final historyRepository = ref.read(historyRepositoryProvider).value!;
 

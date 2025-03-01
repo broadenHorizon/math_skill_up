@@ -4,13 +4,14 @@ import 'package:math_skill_up/features/history/model/history_model.dart';
 import 'package:math_skill_up/features/history/repository/history_repository.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dart:math';
 
 part 'hive_history_repository.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<HistoryRepository> historyRepository(Ref ref) async {
   final repository = await HiveHistoryRepository.create();
-  writeDummyData();
+  // writeDummyData();
   return repository;
 }
 
@@ -18,25 +19,31 @@ void writeDummyData() async {
   // Hive Box 열기
   final box = await Hive.openBox<List<History>>("historyBox");
 
-  // 각 문제 유형별 10개의 더미 데이터 생성
+  // 기존 데이터 모두 삭제
+  await box.clear();
+  print("Existing history data cleared!");
+
+  // 랜덤한 더미 데이터 생성 함수
   List<History> generateHistories(
     QuestionType questionType,
     ArithmeticType arithmeticType,
     FractionType fractionType,
   ) {
-    return List<History>.generate(10, (index) {
+    final random = Random();
+
+    return List<History>.generate(30, (index) {
       return History(
         date: DateTime.now().subtract(Duration(days: index)),
+        elapsedTime: 10000 + random.nextInt(5000) - random.nextInt(2000),
+        accuracy: (0.5 + random.nextDouble() * 0.3).clamp(0.0, 1.0),
         questionType: questionType,
-        elapsedTime: 10000 + (index * 1000), // 10초에서 시작, 점점 증가
-        accuracy: 0.5 + (index * 0.05), // 정확도 50%에서 시작, 점점 증가
         arithmeticType: arithmeticType,
         fractionType: fractionType,
       );
     });
   }
 
-  // 각 유형별 데이터 생성 및 저장
+  // 새로운 더미 데이터 저장
   await box.put(
       "addition",
       generateHistories(QuestionType.arithmetic, ArithmeticType.addition,
@@ -66,7 +73,7 @@ void writeDummyData() async {
       generateHistories(QuestionType.alphabet, ArithmeticType.addition,
           FractionType.fraction));
 
-  print("Dummy data for all types written to Hive!");
+  print("New dummy data for all types written to Hive!");
 }
 
 class HiveHistoryRepository implements HistoryRepository {

@@ -8,6 +8,7 @@ import 'package:math_skill_up/core/theme/app_theme_notifier.dart';
 import 'package:math_skill_up/features/history/repository/history_repository.dart';
 import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
 import 'package:math_skill_up/features/question_setting/repository/hive_question_setting_repository.dart';
+import 'package:math_skill_up/services/riverpod_observer.dart';
 
 import 'services/router.dart';
 
@@ -15,7 +16,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   runApp(
-    const ProviderScope(
+    ProviderScope(
+      observers: [RiverpodObserver()],
       child: App(),
     ),
   );
