@@ -10,11 +10,6 @@ class HistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // HistoryService를 통해 필터링된 히스토리 가져오기
-    final historyService = ref.read(historyServiceProvider);
-    final histories = historyService.getFilteredHistories();
-    print("세팅 체인지");
-
     return Scaffold(
       appBar: AppBar(
         title: Text('히스토리', style: Theme.of(context).textTheme.displayLarge),
@@ -33,17 +28,23 @@ class HistoryScreen extends ConsumerWidget {
           children: [
             HistorySettingBar(),
             const SizedBox(height: 16),
-            histories.isEmpty
-                ? Center(
-                    child: Text(
-                      '히스토리가 없습니다.',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  )
-                : HistoryChart(histories: histories),
+            OptionalHistoryChart(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class OptionalHistoryChart extends ConsumerWidget {
+  const OptionalHistoryChart({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncHistories = ref.watch(historyNotifierProvider);
+    return asyncHistories.when(
+      data: (histories) => HistoryChart(histories: histories),
+      loading: () => Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Text('Error: $err'),
     );
   }
 }

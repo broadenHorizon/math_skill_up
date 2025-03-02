@@ -1,10 +1,10 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 
 part 'history_model.g.dart';
 
 @HiveType(typeId: 1)
-class History {
+class History extends HiveObject {
   @HiveField(0)
   final DateTime date;
   @HiveField(1) // 날짜 (년월일)

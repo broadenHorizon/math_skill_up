@@ -1,29 +1,24 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/features/history/model/history_model.dart';
 import 'package:math_skill_up/features/history/provider/history_providers.dart';
+import 'package:math_skill_up/features/history/repository/history_repository.dart';
 import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
 import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'history_service.g.dart';
 
-@Riverpod(keepAlive: true)
-HistoryService historyService(Ref ref) {
-  return HistoryService(ref: ref);
-}
+@riverpod
+class HistoryNotifier extends _$HistoryNotifier {
+  @override
+  Future<List<History>> build() async {
+    HistoryRepository historyRepository = ref.read(historyRepositoryProvider);
+    HistorySettingModel historySetting = ref.watch(historySettingProvider);
+    await historyRepository.init();
+    return getFilteredHistories(historySetting, historyRepository);
+  }
 
-class HistoryService {
-  final Ref ref;
-
-  HistoryService({
-    required this.ref,
-  });
-
-  List<History> getFilteredHistories() {
-    print("getFilteredHistories 호출");
-    final historySetting = ref.watch(historySettingProvider);
-    final historyRepository = ref.read(historyRepositoryProvider).value!;
-
+  getFilteredHistories(
+      HistorySettingModel historySetting, HistoryRepository historyRepository) {
     switch (historySetting.questionType) {
       case QuestionType.arithmetic:
         switch (historySetting.arithmeticType) {
@@ -35,9 +30,6 @@ class HistoryService {
             return historyRepository.getMultiplicationHistory();
           case ArithmeticType.division:
             return historyRepository.getDivisionHistory();
-          default:
-            // TODO : Error 처리
-            print('error');
         }
       case QuestionType.fraction:
         switch (historySetting.fractionType) {
@@ -45,17 +37,9 @@ class HistoryService {
             return historyRepository.getFractionHistory();
           case FractionType.percent:
             return historyRepository.getPercentHistory();
-          default:
-            // TODO : Error 처리
-            print('error');
         }
       case QuestionType.alphabet:
         return historyRepository.getAlphabetHistory();
-      default:
-        // TODO : Error 처리
-        print('error');
     }
-    //TODO: error 처리 후 제거
-    return [];
   }
 }
