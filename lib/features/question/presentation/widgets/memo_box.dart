@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/repository/current_focus_repository.dart';
 import 'package:math_skill_up/features/question/repository/current_question_repository.dart';
+import 'package:math_skill_up/features/question/repository/memo_repository.dart';
 import 'package:math_skill_up/features/question/repository/timer_repository.dart';
 import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 import 'package:math_skill_up/features/question/util/common_util.dart';
@@ -26,14 +28,18 @@ class MemoBox extends ConsumerStatefulWidget {
 
 class MemoBoxState extends ConsumerState<MemoBox> {
   late FocusNode _focusNode;
+  late final TextEditingController _controller = TextEditingController();
   bool _isExpanded = false;
+  bool _isSmallSubmitButton = true;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode();
     _focusNode.addListener(() {
-      setState(() {});
+      if (_focusNode.hasFocus) {
+        ref.read(currentFocusRepositoryProvider.notifier).setFocus("memo");
+      }
     });
   }
 
@@ -45,7 +51,10 @@ class MemoBoxState extends ConsumerState<MemoBox> {
 
   @override
   Widget build(BuildContext context) {
+    final memo = ref.watch(memoRepositoryProvider);
+    _controller.text = memo;
     _isExpanded = widget.flexRatio > 1.5;
+    _isSmallSubmitButton = widget.flexRatio < 1.8;
     final homeService = ref.read(homeServiceProvider);
     final settings = homeService.getSettingsData();
     final resultListRepository =
@@ -53,15 +62,18 @@ class MemoBoxState extends ConsumerState<MemoBox> {
     final currentQuestion =
         ref.read(currentQuestionRepositoryProvider.notifier);
     final userAnswer = ref.read(userAnswerRepositoryProvider.notifier);
+    final memoText = ref.read(memoRepositoryProvider.notifier);
 
     void submitHandler() {
       final timeTaken = ref.read(timerRepositoryProvider.notifier).stopTimer();
 
       resultListRepository.addResult(
           currentQuestion.getQuestion(), timeTaken, userAnswer.getUserAnswer());
+      userAnswer.setUserAnswer('');
+      memoText.setMemo('');
       if (convertQuestionCountToInt(settings.questionCount) <=
           widget.target + 1) {
-        context.push('/result');
+        context.go('/result');
       } else {
         context.go('/question?id=${widget.target + 1}');
       }
@@ -88,7 +100,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
-                if (!_isExpanded)
+                if (_isSmallSubmitButton)
                   Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
@@ -106,6 +118,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
             Expanded(
               child: TextField(
                 focusNode: _focusNode,
+                controller: _controller,
                 decoration: InputDecoration(
                   hintText: _focusNode.hasFocus ? '' : 'Write here...',
                   border: InputBorder.none,
@@ -115,7 +128,7 @@ class MemoBoxState extends ConsumerState<MemoBox> {
                 showCursor: _focusNode.hasFocus,
               ),
             ),
-          if (_isExpanded)
+          if (!_isSmallSubmitButton)
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(

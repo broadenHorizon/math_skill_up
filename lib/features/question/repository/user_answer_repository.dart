@@ -4,19 +4,16 @@ part 'user_answer_repository.g.dart';
 
 @riverpod
 class UserAnswerRepository extends _$UserAnswerRepository {
-  late dynamic _userAnswer;
-
   @override
-  dynamic build() {
-    _userAnswer = null;
-    return _userAnswer;
+  String build() {
+    return "";
   }
 
-  void setUserAnswer(dynamic userAnswer) {
-    _userAnswer = userAnswer;
+  void setUserAnswer(String userAnswer) {
+    state = userAnswer; // 상태 업데이트
   }
 
-  dynamic getUserAnswer() {
-    return _userAnswer;
+  String getUserAnswer() {
+    return state;
   }
 }

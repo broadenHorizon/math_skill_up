@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
 import 'package:math_skill_up/features/home/service/home_service.dart';
@@ -45,9 +46,12 @@ class QuestionAppBarState extends ConsumerState<QuestionAppBar> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 20), // 왼쪽 여백
-              child: Text(
-                "x",
-                style: Theme.of(context).textTheme.titleLarge,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  ref.read(timerRepositoryProvider.notifier).stopTimer();
+                  context.go('/home');
+                },
               ),
             ),
           ),

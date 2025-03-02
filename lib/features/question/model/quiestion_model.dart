@@ -42,7 +42,7 @@ class Fraction {
   double get value => numerator / denominator;
 }
 
-enum FractionOperationAnswer { first, second }
+enum FractionOperationAnswer { first, second, equal }
 
 class FractionOperationQuestion extends Question {
   final int id;

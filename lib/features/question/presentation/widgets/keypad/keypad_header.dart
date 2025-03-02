@@ -8,13 +8,19 @@ class KeypadHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 40,
+      height: 50,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.gray200)),
       ),
-      child: Row(
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text("header", style: Theme.of(context).textTheme.titleLarge)
+          Icon(
+            Icons.calculate_outlined,
+            size: 36,
+            color: AppColors.black,
+          ),
+          SizedBox(width: 10),
         ],
       ),
     );
