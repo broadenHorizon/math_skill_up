@@ -76,11 +76,11 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
                         show: false,
                       ),
                       isStrokeCapRound: true,
-                      barWidth: 8,
+                      barWidth: 5,
                       belowBarData: BarAreaData(
                         show: false,
                       ),
-                      isCurved: true,
+                      isCurved: false,
                     ),
                   ],
                   lineTouchData: LineTouchData(
@@ -102,7 +102,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
                               return FlDotCirclePainter(
                                 radius: 6,
                                 color: Theme.of(context).colorScheme.primary,
-                                strokeWidth: 0,
+                                strokeWidth: 2,
                                 strokeColor:
                                     Theme.of(context).colorScheme.primary,
                               );
@@ -118,35 +118,27 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
                           return LineTooltipItem(
                             '',
                             TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                             children: [
                               TextSpan(
                                 text:
                                     '${history.date.year}/${history.date.month}/${history.date.day}',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               TextSpan(
-                                text:
-                                    '\n${(history.accuracy * 100).toStringAsFixed(1)}%',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
+                                  text:
+                                      '\n${(history.accuracy * 100).toStringAsFixed(1)}%',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
                             ],
                           );
                         }).toList();
                       },
-                      getTooltipColor: (LineBarSpot barSpot) =>
-                          Theme.of(context).colorScheme.primary,
+                      tooltipBorder: BorderSide.none,
+                      getTooltipColor: (touchedSpot) =>
+                          Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   titlesData: FlTitlesData(
