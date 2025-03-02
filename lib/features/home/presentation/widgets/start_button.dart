@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StartButton extends StatelessWidget {
   const StartButton({super.key});
@@ -26,7 +27,7 @@ class StartButton extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    // TODO: 문제 풀이 화면으로 이동
+                    context.go('/question');
                   },
                   icon: Icon(
                     Icons.play_arrow,

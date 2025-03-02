@@ -10,31 +10,41 @@ class ResultListRepository extends _$ResultListRepository {
 
   @override
   List<Result> build() {
-    return [];
+    resultList = [];
+    return resultList;
   }
 
   /// 결과 추가
   /// [question] 문제
   /// [time] 문제 푸는 시간
   /// [userAnswer] 사용자가 입력한 답 (BasicOperation: double, FractionOperation: FractionOperationAnswer, AlphabetOperation: String)
-  void addResult(Question question, double time, dynamic userAnswer) {
+  void addResult(Question question, double time, String userAnswer) {
     if (question is BasicOperationQuestion) {
+      double? answer = userAnswer == "" ? null : double.parse(userAnswer);
       resultList.add(BasicResult(
-        userAnswer: userAnswer,
-        isCorrect: question.answer == userAnswer,
+        userAnswer: answer,
+        isCorrect: question.answer == answer,
         time: time,
         question: question,
       ));
     } else if (question is FractionOperationQuestion) {
+      FractionOperationAnswer? answer;
+      if (userAnswer == "first") {
+        answer = FractionOperationAnswer.first;
+      } else if (userAnswer == "second") {
+        answer = FractionOperationAnswer.second;
+      } else if (userAnswer == "equal") {
+        answer = FractionOperationAnswer.equal;
+      }
       resultList.add(FractionResult(
-        userAnswer: userAnswer,
-        isCorrect: question.biggerFraction == userAnswer,
+        userAnswer: answer,
+        isCorrect: question.biggerFraction == answer,
         time: time,
         question: question,
       ));
     } else if (question is AlphabetOperationQuestion) {
       resultList.add(AlphabetResult(
-        userAnswer: userAnswer,
+        userAnswer: userAnswer == "" ? null : userAnswer,
         isCorrect: question.answer == userAnswer,
         time: time,
         question: question,

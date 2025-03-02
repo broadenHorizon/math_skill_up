@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
+import 'package:math_skill_up/features/home/service/home_service.dart';
+import 'package:math_skill_up/features/question/repository/timer_repository.dart';
+import 'package:math_skill_up/features/question/util/common_util.dart';
 
-class QuestionAppBar extends ConsumerWidget {
-  const QuestionAppBar({super.key});
+class QuestionAppBar extends ConsumerStatefulWidget {
+  const QuestionAppBar({super.key, required this.target});
+
+  final int target;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  QuestionAppBarState createState() => QuestionAppBarState();
+}
+
+class QuestionAppBarState extends ConsumerState<QuestionAppBar> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(timerRepositoryProvider.notifier).startTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant QuestionAppBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.target != widget.target) {
+      ref.read(timerRepositoryProvider.notifier).startTimer();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final time = ref.watch(timerRepositoryProvider);
+    final homeService = ref.read(homeServiceProvider);
+
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -18,15 +46,18 @@ class QuestionAppBar extends ConsumerWidget {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 20), // 왼쪽 여백
-              child: Text(
-                "x",
-                style: Theme.of(context).textTheme.titleLarge,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  ref.read(timerRepositoryProvider.notifier).stopTimer();
+                  context.go('/home');
+                },
               ),
             ),
           ),
           Center(
             child: Text(
-              "3/10",
+              "${widget.target}/${convertQuestionCountToInt(homeService.getSettingsData().questionCount)}",
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -35,7 +66,7 @@ class QuestionAppBar extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 20), // 오른쪽 여백
               child: Text(
-                "6.2s",
+                "${time}s",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
