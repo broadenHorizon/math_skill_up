@@ -13,6 +13,7 @@ class AppThemeData {
       outline: AppColors.gray200,
       error: AppColors.error,
       inversePrimary: AppColors.white,
+      onPrimary: AppColors.primaryDark,
     ),
 
     // Text Color

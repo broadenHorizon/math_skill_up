@@ -1,6 +1,7 @@
 import 'package:math_skill_up/features/history/model/history_model.dart';
 
 abstract class HistoryRepository {
+  Future<void> init();
   List<History> getAdditionHistory();
   List<History> getSubtractionHistory();
   List<History> getMultiplicationHistory();

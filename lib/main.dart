@@ -5,9 +5,8 @@ import 'package:math_skill_up/core/components/loading_indicator.dart';
 import 'package:math_skill_up/core/theme/constants.dart';
 import 'package:math_skill_up/core/theme/app_theme_data.dart';
 import 'package:math_skill_up/core/theme/app_theme_notifier.dart';
-import 'package:math_skill_up/features/history/repository/history_repository.dart';
-import 'package:math_skill_up/features/history/repository/hive_history_repository.dart';
 import 'package:math_skill_up/features/question_setting/repository/hive_question_setting_repository.dart';
+import 'package:math_skill_up/services/riverpod_observer.dart';
 
 import 'services/router.dart';
 
@@ -15,7 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   runApp(
-    const ProviderScope(
+    ProviderScope(
+      observers: [RiverpodObserver()],
       child: App(),
     ),
   );
@@ -29,11 +29,7 @@ class App extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     AsyncValue<String> theme = ref.watch(appThemeNotifierProvider);
     final questionSettings = ref.watch(hiveQuestionSettingRepositoryProvider);
-    AsyncValue<HistoryRepository> historyRepository =
-        ref.watch(historyRepositoryProvider);
-    if (theme.isLoading ||
-        questionSettings.isLoading ||
-        historyRepository.isLoading) {
+    if (theme.isLoading || questionSettings.isLoading) {
       return const Center(child: LoadingIndicator());
     }
     return MaterialApp.router(
