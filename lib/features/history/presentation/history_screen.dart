@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:math_skill_up/features/history/presentation/history_chart.dart';
+import 'package:math_skill_up/features/history/presentation/history_list.dart';
 import 'package:math_skill_up/features/history/presentation/history_setting_bar.dart';
 import 'package:math_skill_up/features/history/service/history_service.dart';
 
@@ -29,6 +30,8 @@ class HistoryScreen extends ConsumerWidget {
             HistorySettingBar(),
             const SizedBox(height: 16),
             OptionalHistoryChart(),
+            const SizedBox(height: 16),
+            Expanded(child: HistoryList()),
           ],
         ),
       ),

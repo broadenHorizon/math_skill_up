@@ -8,7 +8,7 @@ class AppThemeData {
       primary: AppColors.primary,
       surface: AppColors.gray100,
       primaryContainer: AppColors.offWhite,
-      secondaryContainer: AppColors.gray100,
+      secondaryContainer: AppColors.gray200,
       shadow: AppColors.gray300,
       outline: AppColors.gray200,
       error: AppColors.error,
