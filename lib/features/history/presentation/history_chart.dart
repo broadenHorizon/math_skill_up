@@ -149,13 +149,26 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
                     topTitles: const AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    leftTitles: const AxisTitles(
+                    leftTitles: AxisTitles(
                       drawBelowEverything: true,
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: leftReservedSize,
                         maxIncluded: false,
                         minIncluded: false,
+                        getTitlesWidget: (double value, TitleMeta meta) {
+                          // 0.87과 같은 값을 87%로 변환
+                          final percentage = value * 100;
+                          return SideTitleWidget(
+                            meta: meta,
+                            child: Text(
+                              '${percentage.toStringAsFixed(0)}%',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall, // 원하는 스타일 적용
+                            ),
+                          );
+                        },
                       ),
                     ),
                     bottomTitles: AxisTitles(
