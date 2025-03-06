@@ -23,14 +23,14 @@ class HistoryScreen extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(
-            top: 8.0, bottom: 16.0, left: 16.0, right: 16.0),
+            top: 0, bottom: 16.0, left: 16.0, right: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             HistorySettingBar(),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             OptionalHistoryChart(),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             Expanded(child: HistoryList()),
           ],
         ),
