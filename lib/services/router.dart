@@ -6,6 +6,7 @@ import 'package:math_skill_up/features/history/presentation/history_screen.dart'
 import 'package:math_skill_up/features/home/presentation/home_screen.dart';
 import 'package:math_skill_up/features/question_setting/presentation/question_setting_screen.dart';
 import 'package:math_skill_up/features/question/presentation/question_page.dart';
+import 'package:math_skill_up/features/result/presentation/result_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -13,7 +14,7 @@ part 'router.g.dart';
 @riverpod
 GoRouter router(Ref ref) {
   final router = GoRouter(
-    initialLocation: '/home', //TODO: 임시로 변경, home으로 변경되어야함
+    initialLocation: '/result', //TODO: 임시로 변경, home으로 변경되어야함
     routes: [
       GoRoute(
         path: '/',
@@ -42,6 +43,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/home',
         builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/result',
+        builder: (_, __) => const ResultScreen(),
       ),
     ],
   );
