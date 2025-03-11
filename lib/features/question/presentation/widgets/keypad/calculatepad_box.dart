@@ -4,17 +4,78 @@ import 'package:math_skill_up/features/question/repository/current_focus_reposit
 import 'package:math_skill_up/features/question/repository/memo_repository.dart';
 import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
 
+const specialKeys = [
+  'plus',
+  'minus',
+  'multiply',
+  'divide',
+  'equal',
+  'delete',
+  'enter',
+  'blank'
+];
+
 class CalculatepadBox extends ConsumerWidget {
   const CalculatepadBox({super.key});
+
+  String getKey(String target) {
+    switch (target) {
+      case "multiply":
+        return "×";
+      case "divide":
+        return "÷";
+      case "plus":
+        return "+";
+      case "minus":
+        return "-";
+      case "equal":
+        return "=";
+      case "delete":
+        return "⌫";
+      case "enter":
+        return "⏎";
+      case "blank":
+        return "⎵";
+      default:
+        return target;
+    }
+  }
+
+  String getInputText(String prevText, String inputText) {
+    switch (inputText) {
+      case "multiply":
+        return "$prevText×";
+      case "divide":
+        return "$prevText÷";
+      case "plus":
+        return "$prevText+";
+      case "minus":
+        return "$prevText-";
+      case "equal":
+        return "$prevText=";
+      case "delete":
+        return prevText.substring(0, prevText.length - 1);
+      case "enter":
+        return "$prevText\n";
+      case "blank":
+        return "$prevText ";
+      default:
+        return prevText + inputText;
+    }
+  }
+
+  bool validateSpecialKey(String key) {
+    return specialKeys.contains(key);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String? currentFocus = ref.watch(currentFocusRepositoryProvider);
     final buttons = [
-      "+",
-      "-",
-      "×",
-      "÷",
+      "plus",
+      "minus",
+      "multiply",
+      "divide",
       '7',
       '8',
       '9',
@@ -26,11 +87,10 @@ class CalculatepadBox extends ConsumerWidget {
       '1',
       '2',
       '3',
-      "enter",
+      "blank",
       '.',
       '0',
-      "=",
-      "⌞⌟",
+      "equal",
     ];
 
     return Expanded(
@@ -48,20 +108,17 @@ class CalculatepadBox extends ConsumerWidget {
           return ElevatedButton(
             onPressed: () {
               if (currentFocus == 'answer') {
-                String prevAnswer = userAnswer.getUserAnswer();
-                if (buttons[index] == 'delete') {
-                  userAnswer.setUserAnswer(
-                      prevAnswer.substring(0, prevAnswer.length - 1));
+                if (validateSpecialKey(buttons[index]) &&
+                    buttons[index] != "delete") {
                   return;
                 }
-                userAnswer.setUserAnswer(prevAnswer + buttons[index]);
+                String prevAnswer = userAnswer.getUserAnswer();
+                String resultAnswer = getInputText(prevAnswer, buttons[index]);
+                userAnswer.setUserAnswer(resultAnswer);
               } else if (currentFocus == 'memo') {
                 String prevMemo = memo.getMemo();
-                if (buttons[index] == 'delete') {
-                  memo.setMemo(prevMemo.substring(0, prevMemo.length - 1));
-                  return;
-                }
-                memo.setMemo(prevMemo + buttons[index]);
+                String resultMemo = getInputText(prevMemo, buttons[index]);
+                memo.setMemo(resultMemo);
               }
             },
             style: ElevatedButton.styleFrom(
@@ -72,7 +129,7 @@ class CalculatepadBox extends ConsumerWidget {
               foregroundColor: Colors.black,
             ),
             child: Text(
-              buttons[index] == 'delete' ? '⌫' : buttons[index],
+              getKey(buttons[index]),
               style: Theme.of(context).textTheme.displayMedium,
             ),
           );
