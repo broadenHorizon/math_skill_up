@@ -1,87 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/theme/app_colors.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/keypad/alphabetpad_box.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/keypad/calculatepad_box.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/keypad/fractionpad_box.dart';
 import 'package:math_skill_up/features/question/presentation/widgets/keypad/keypad_header.dart';
-import 'package:math_skill_up/features/question/repository/current_focus_repository.dart';
-import 'package:math_skill_up/features/question/repository/memo_repository.dart';
-import 'package:math_skill_up/features/question/repository/user_answer_repository.dart';
+import 'package:math_skill_up/features/question/presentation/widgets/keypad/numberpad_box.dart';
 
-class KeypadBox extends ConsumerWidget {
+class KeypadBox extends ConsumerStatefulWidget {
   const KeypadBox({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    String? currentFocus = ref.watch(currentFocusRepositoryProvider);
-    final buttons = [
-      '7',
-      '8',
-      '9',
-      '4',
-      '5',
-      '6',
-      '1',
-      '2',
-      '3',
-      '.',
-      '0',
-      'delete'
-    ];
+  KeypadBoxState createState() => KeypadBoxState();
+}
+
+class KeypadBoxState extends ConsumerState<KeypadBox> {
+  String keypadType = 'numberpad';
+
+  void toggleKeypadType(String type) {
+    setState(() {
+      keypadType = type;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 340,
       color: AppColors.white,
-      child: Column(
-        children: [
-          const KeypadHeader(),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-                childAspectRatio: 2, // 정사각형 비율로 설정
-              ),
-              itemCount: buttons.length,
-              itemBuilder: (context, index) {
-                final userAnswer =
-                    ref.read(userAnswerRepositoryProvider.notifier);
-                final memo = ref.read(memoRepositoryProvider.notifier);
-                return ElevatedButton(
-                  onPressed: () {
-                    if (currentFocus == 'answer') {
-                      String prevAnswer = userAnswer.getUserAnswer();
-                      if (buttons[index] == 'delete') {
-                        userAnswer.setUserAnswer(
-                            prevAnswer.substring(0, prevAnswer.length - 1));
-                        return;
-                      }
-                      userAnswer.setUserAnswer(prevAnswer + buttons[index]);
-                    } else if (currentFocus == 'memo') {
-                      String prevMemo = memo.getMemo();
-                      if (buttons[index] == 'delete') {
-                        memo.setMemo(
-                            prevMemo.substring(0, prevMemo.length - 1));
-                        return;
-                      }
-                      memo.setMemo(prevMemo + buttons[index]);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                  ),
-                  child: Text(
-                    buttons[index] == 'delete' ? '⌫' : buttons[index],
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                );
-              },
+      child: keypadType == "fractionpad"
+          ? const FractionpadBox()
+          : Column(
+              children: [
+                KeypadHeader(
+                  keypadType: keypadType,
+                  toggleKeypadType: toggleKeypadType,
+                ),
+                keypadType == 'numberpad'
+                    ? const NumberpadBox()
+                    : keypadType == 'alphabetpad'
+                        ? const AlphabetpadBox()
+                        : const CalculatepadBox(),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -36,6 +36,7 @@ class BlankBoxState extends ConsumerState<BlankBox> {
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -43,6 +44,9 @@ class BlankBoxState extends ConsumerState<BlankBox> {
   Widget build(BuildContext context) {
     final userAnswer = ref.watch(userAnswerRepositoryProvider);
     _controller.text = userAnswer;
+    _controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: _controller.text.length),
+    );
 
     return Container(
       width: widget.width, // TextField 넓이
