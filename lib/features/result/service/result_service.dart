@@ -22,9 +22,31 @@ class ResultService {
   ResultSummary? calResultSummary() {
     List<Result> results = ref.watch(resultListRepositoryProvider);
     if (results.isEmpty) return null;
+
+    double totalTime = results.fold(
+        0, (previousValue, element) => previousValue + element.time);
+    double averageTime = totalTime / results.length;
+
+    int totalQuestions = results.length;
+    int correctQuestions = results.where((element) => element.isCorrect).length;
+    double averageAccuracy = correctQuestions / totalQuestions;
+
     History? latestHistory = getLatestHistory(results.first);
-    //TODO: 이어서 로직 작성해야함.
-    return null;
+
+    double timeChange =
+        latestHistory == null ? 0 : averageTime - latestHistory.elapsedTime;
+    double accuracyChange =
+        latestHistory == null ? 0 : averageAccuracy - latestHistory.accuracy;
+
+    return ResultSummary(
+      totalTime: totalTime,
+      averageTime: averageTime,
+      totalQuestions: totalQuestions,
+      correctQuestions: correctQuestions,
+      averageAccuracy: averageAccuracy,
+      timeChange: timeChange,
+      accuracyChange: accuracyChange,
+    );
   }
 
   History? getLatestHistory(Result result) {
