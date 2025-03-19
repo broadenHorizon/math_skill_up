@@ -10,7 +10,6 @@ class CurrentFocusRepository extends _$CurrentFocusRepository {
   }
 
   void setFocus(String? currentFocus) {
-    print(currentFocus);
     state = currentFocus; // 상태 업데이트
   }
 }
