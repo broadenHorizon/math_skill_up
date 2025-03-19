@@ -7,6 +7,8 @@ import 'package:math_skill_up/features/result/model/result_model.dart';
 import 'package:math_skill_up/features/result/repository/result_list_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'result_service.g.dart';
+
 @riverpod
 ResultService resultService(Ref ref) {
   return ResultService(ref: ref);
