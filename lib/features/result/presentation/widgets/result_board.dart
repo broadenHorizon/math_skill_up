@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/components/box_container.dart';
+import 'package:math_skill_up/features/question/model/quiestion_model.dart';
+import 'package:math_skill_up/features/question_setting/model/question_setting_model.dart';
 import 'package:math_skill_up/features/result/model/result_model.dart';
+import 'package:math_skill_up/features/result/repository/result_list_repository.dart';
 import 'package:math_skill_up/features/result/service/result_service.dart';
 
 class ResultBoard extends ConsumerWidget {
@@ -9,19 +12,29 @@ class ResultBoard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //TODO: to be removed
+    final dummyFraction = Fraction(numerator: 1, denominator: 2);
+    final dummyQuestions = List.generate(
+      10,
+      (index) => FractionOperationQuestion(
+        id: index,
+        type: FractionType.fraction,
+        firstFraction: dummyFraction,
+        secondFraction: Fraction(numerator: index + 1, denominator: index + 2),
+        biggerFraction: index % 3 == 0
+            ? FractionOperationAnswer.first
+            : index % 3 == 1
+                ? FractionOperationAnswer.second
+                : FractionOperationAnswer.equal,
+      ),
+    );
+
+    for (var q in dummyQuestions) {
+      ref.read(resultListRepositoryProvider.notifier).addResult(q, 10000, ">");
+    }
+
     ResultService resultService = ref.read(resultServiceProvider);
     ResultSummary? resultSummary = resultService.calResultSummary();
-
-    //TODO: to be removed
-    resultSummary ??= ResultSummary(
-      totalTime: 100000,
-      averageTime: 10000,
-      timeChange: -250,
-      totalQuestions: 10,
-      correctQuestions: 8,
-      averageAccuracy: 0.2,
-      accuracyChange: 0.1,
-    );
 
     if (resultSummary == null) {
       return Center(

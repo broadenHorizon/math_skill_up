@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_skill_up/core/components/common_scaffold.dart';
 import 'package:math_skill_up/features/result/presentation/widgets/result_board.dart';
+import 'package:math_skill_up/features/result/presentation/widgets/result_list.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
@@ -13,6 +14,7 @@ class ResultScreen extends StatelessWidget {
         children: [
           ResultBoard(),
           SizedBox(height: 8),
+          Expanded(child: ResultList()),
         ],
       ),
     );
