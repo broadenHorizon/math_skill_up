@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:math_skill_up/core/components/line_item.dart';
 import 'package:math_skill_up/features/history/model/history_model.dart';
 import 'package:math_skill_up/features/history/service/history_service.dart';
 
@@ -83,21 +84,21 @@ class HistoryHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.left,
+          historyItemPosition: LineItemPosition.left,
           text: "날짜",
           isHeader: true,
         ),
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.middle,
+          historyItemPosition: LineItemPosition.middle,
           text: "평균 시간",
           isHeader: true,
         ),
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.right,
+          historyItemPosition: LineItemPosition.right,
           text: "정답률",
           isHeader: true,
         ),
@@ -120,79 +121,22 @@ class HistoryLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.left,
+          historyItemPosition: LineItemPosition.left,
           text: history.formattedDate,
         ),
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.middle,
+          historyItemPosition: LineItemPosition.middle,
           text: '${(history.elapsedTime / 1000).toStringAsFixed(2)}s',
         ),
-        HistoryItem(
+        LineItem(
           width: itemWidth,
-          historyItemPosition: HistoryItemPosition.right,
+          historyItemPosition: LineItemPosition.right,
           text: '${(history.accuracy * 100).toStringAsFixed(2)}%',
         ),
       ],
     );
   }
-}
-
-class HistoryItem extends StatelessWidget {
-  final double width;
-  final HistoryItemPosition historyItemPosition;
-  final bool isHeader;
-  final String text;
-
-  const HistoryItem(
-      {super.key,
-      required this.width,
-      required this.historyItemPosition,
-      this.isHeader = false,
-      required this.text});
-
-  BorderRadius getRadius() {
-    switch (historyItemPosition) {
-      case HistoryItemPosition.left:
-        return BorderRadius.only(
-          topLeft: Radius.circular(5),
-          bottomLeft: Radius.circular(5),
-        );
-      case HistoryItemPosition.middle:
-        return BorderRadius.zero;
-      case HistoryItemPosition.right:
-        return BorderRadius.only(
-          topRight: Radius.circular(5),
-          bottomRight: Radius.circular(5),
-        );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(1.5),
-      height: 25,
-      width: width,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: getRadius(),
-      ),
-      child: Center(
-          child: Text(
-        text,
-        style: isHeader
-            ? Theme.of(context).textTheme.labelMedium
-            : Theme.of(context).textTheme.bodyMedium,
-      )),
-    );
-  }
-}
-
-enum HistoryItemPosition {
-  left,
-  middle,
-  right;
 }
