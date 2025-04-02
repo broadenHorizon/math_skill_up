@@ -12,6 +12,7 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CommonScaffold(
+      titleText: 'History',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

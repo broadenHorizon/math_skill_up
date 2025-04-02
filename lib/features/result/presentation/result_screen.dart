@@ -8,9 +8,11 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
+      titleText: '결과',
       child: Column(
         children: [
           ResultBoard(),
+          SizedBox(height: 8),
         ],
       ),
     );

@@ -3,12 +3,18 @@ import 'package:go_router/go_router.dart';
 
 class CommonScaffold extends StatelessWidget {
   final Widget child;
-  const CommonScaffold({super.key, required this.child});
+  final String titleText;
+
+  const CommonScaffold({
+    super.key,
+    required this.child,
+    required this.titleText,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppBar(titleText: '히스토리'),
+      appBar: CommonAppBar(titleText: titleText),
       body: CommonBodyPadding(
         child: child,
       ),
