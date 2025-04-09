@@ -1,47 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_skill_up/core/components/line_item.dart';
-import 'package:math_skill_up/features/history/model/history_model.dart';
-import 'package:math_skill_up/features/history/service/history_service.dart';
+import 'package:math_skill_up/features/result/model/result_model.dart';
+import 'package:math_skill_up/features/result/repository/result_list_repository.dart';
 
 /// 비동기 데이터(Riverpod) 처리 담당
-class HistoryList extends ConsumerWidget {
-  const HistoryList({super.key});
+class ResultList extends ConsumerWidget {
+  const ResultList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncHistories = ref.watch(historyNotifierProvider);
+    final results = ref.watch(resultListRepositoryProvider);
 
-    return asyncHistories.when(
-      data: (histories) {
-        // 리스트가 비어있는 경우
-        if (histories.isEmpty) {
-          return const Center(
-            child: Text('기록이 없습니다.'),
-          );
-        }
-        // 데이터가 있는 경우, 실제 리스트 위젯 반환
-        return HistoryListView(histories: histories);
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(
-        child: Text('Error: $err'),
-      ),
-    );
-  }
-}
-
-/// 실제 리스트 UI 그리기 담당
-class HistoryListView extends StatelessWidget {
-  final List<History> histories;
-
-  const HistoryListView({
-    super.key,
-    required this.histories,
-  });
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(4.0),
       decoration: BoxDecoration(
@@ -53,14 +23,14 @@ class HistoryListView extends StatelessWidget {
 
         return Column(
           children: [
-            HistoryHeader(itemWidth: itemWidth),
+            ResultHeader(itemWidth: itemWidth),
             Expanded(
               child: ListView.builder(
-                itemCount: histories.length,
+                itemCount: results.length,
                 itemBuilder: (context, index) {
-                  return HistoryLine(
+                  return ResultLine(
                     itemWidth: itemWidth,
-                    history: histories[index],
+                    result: results[index],
                   );
                 },
               ),
@@ -72,10 +42,10 @@ class HistoryListView extends StatelessWidget {
   }
 }
 
-class HistoryHeader extends StatelessWidget {
+class ResultHeader extends StatelessWidget {
   final double itemWidth;
 
-  const HistoryHeader({
+  const ResultHeader({
     super.key,
     required this.itemWidth,
   });
@@ -107,14 +77,14 @@ class HistoryHeader extends StatelessWidget {
   }
 }
 
-class HistoryLine extends StatelessWidget {
+class ResultLine extends StatelessWidget {
   final double itemWidth;
-  final History history;
+  final Result result;
 
-  const HistoryLine({
+  const ResultLine({
     super.key,
     required this.itemWidth,
-    required this.history,
+    required this.result,
   });
 
   @override
@@ -124,17 +94,17 @@ class HistoryLine extends StatelessWidget {
         LineItem(
           width: itemWidth,
           historyItemPosition: LineItemPosition.left,
-          text: history.formattedDate,
+          text: result.isCorrect ? "정답" : "오답",
         ),
         LineItem(
           width: itemWidth,
           historyItemPosition: LineItemPosition.middle,
-          text: '${(history.elapsedTime / 1000).toStringAsFixed(2)}s',
+          text: result.time.toStringAsFixed(2),
         ),
         LineItem(
           width: itemWidth,
           historyItemPosition: LineItemPosition.right,
-          text: '${(history.accuracy * 100).toStringAsFixed(2)}%',
+          text: result.time.toStringAsFixed(2),
         ),
       ],
     );

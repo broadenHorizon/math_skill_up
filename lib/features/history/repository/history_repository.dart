@@ -9,6 +9,13 @@ abstract class HistoryRepository {
   List<History> getFractionHistory();
   List<History> getPercentHistory();
   List<History> getAlphabetHistory();
+  History? getLatestAdditionHistory();
+  History? getLatestSubtractionHistory();
+  History? getLatestMultiplicationHistory();
+  History? getLatestDivisionHistory();
+  History? getLatestFractionHistory();
+  History? getLatestPercentHistory();
+  History? getLatestAlphabetHistory();
 
   void addAdditionHistory(History history);
   void addSubtractionHistory(History history);

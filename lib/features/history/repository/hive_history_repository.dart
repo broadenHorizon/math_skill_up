@@ -190,4 +190,44 @@ class HiveHistoryRepository implements HistoryRepository {
   List<History> getSubtractionHistory() {
     return _box.get(_subtractionKey)?.cast<History>() ?? [];
   }
+
+  History? _getLatestHistory(String key) {
+    List<History> histories = _box.get(key)?.cast<History>() ?? [];
+    return histories.isNotEmpty ? histories.last : null;
+  }
+
+  @override
+  History? getLatestAdditionHistory() {
+    return _getLatestHistory(_additionKey);
+  }
+
+  @override
+  History? getLatestAlphabetHistory() {
+    return _getLatestHistory(_alphabetKey);
+  }
+
+  @override
+  History? getLatestDivisionHistory() {
+    return _getLatestHistory(_divisionKey);
+  }
+
+  @override
+  History? getLatestFractionHistory() {
+    return _getLatestHistory(_fractionKey);
+  }
+
+  @override
+  History? getLatestMultiplicationHistory() {
+    return _getLatestHistory(_multiplicationKey);
+  }
+
+  @override
+  History? getLatestPercentHistory() {
+    return _getLatestHistory(_percentKey);
+  }
+
+  @override
+  History? getLatestSubtractionHistory() {
+    return _getLatestHistory(_subtractionKey);
+  }
 }

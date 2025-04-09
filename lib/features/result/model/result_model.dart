@@ -45,3 +45,23 @@ class AlphabetResult extends Result {
     required this.question,
   });
 }
+
+class ResultSummary {
+  double totalTime;
+  double averageTime;
+  double timeChange;
+  int totalQuestions;
+  int correctQuestions;
+  double averageAccuracy;
+  double accuracyChange;
+
+  ResultSummary({
+    required this.totalTime,
+    required this.averageTime,
+    required this.timeChange,
+    required this.totalQuestions,
+    required this.correctQuestions,
+    required this.averageAccuracy,
+    required this.accuracyChange,
+  });
+}
