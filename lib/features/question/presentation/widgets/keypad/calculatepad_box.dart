@@ -94,12 +94,14 @@ class CalculatepadBox extends ConsumerWidget {
     ];
 
     return Expanded(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0), // 양쪽에 16px 마진 추가
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
           mainAxisSpacing: 8.0,
           crossAxisSpacing: 8.0,
-          childAspectRatio: 2,
+          childAspectRatio: 1.9,
         ),
         itemCount: buttons.length,
         itemBuilder: (context, index) {
@@ -135,6 +137,6 @@ class CalculatepadBox extends ConsumerWidget {
           );
         },
       ),
-    );
+    ));
   }
 }

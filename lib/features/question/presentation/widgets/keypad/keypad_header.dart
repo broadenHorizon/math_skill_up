@@ -35,7 +35,7 @@ class KeypadHeader extends ConsumerWidget {
           IconButton(
             icon: Icon(
               keypadType == "calculatepad"
-                  ? Icons.expand
+                  ? Icons.one_x_mobiledata
                   : Icons.calculate_outlined,
               size: 36,
               color: AppColors.black,
