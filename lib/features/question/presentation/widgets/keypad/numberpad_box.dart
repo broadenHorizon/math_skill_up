@@ -25,6 +25,8 @@ class NumberpadBox extends ConsumerWidget {
       'delete'
     ];
     return Expanded(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0), // 양쪽에 16px 마진 추가
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -69,6 +71,6 @@ class NumberpadBox extends ConsumerWidget {
           );
         },
       ),
-    );
+    ));
   }
 }
